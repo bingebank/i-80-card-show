@@ -147,6 +147,9 @@
             id="vendor-form"
             method="POST"
             action=""
+            data-validate
+            data-fallback="Online sign-ups aren&#8217;t switched on yet. Please email info@i80cardshow.com with your name, phone number, how many tables you need and what you sell, and we&#8217;ll get you on the vendor list."
+            data-success="Thanks &#8212; you&#8217;re on the vendor list. We&#8217;ll confirm your table and send payment details within two business days."
             novalidate>
 
         <input type="hidden" name="_subject" value="New I-80 Card Show vendor sign-up">
@@ -220,11 +223,11 @@
 
             <div class="field">
               <label for="show-date">Which show? <span class="req" aria-hidden="true">*</span></label>
-              <!-- TODO(content): once dates are set, list them here instead. -->
+              <!-- TODO(content): once dates are set, list the actual dates here instead. -->
               <select id="show-date" name="show-date" required>
-                <option value="">Choose a show…</option>
-                <option>The next show</option>
-                <option>Every show this season</option>
+                <option value="">Choose one…</option>
+                <option>The first show — whenever it lands</option>
+                <option>Every show — put me down as a regular</option>
                 <option>Just add me to the vendor list for now</option>
               </select>
               <p class="field__error" data-error-for="show-date"></p>
@@ -345,7 +348,7 @@
           <p class="note">We reply within two business days. Prefer email? <a href="mailto:info@i80cardshow.com">info@i80cardshow.com</a></p>
         </div>
 
-        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        <p class="form-status" role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>

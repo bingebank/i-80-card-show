@@ -394,7 +394,36 @@ p:last-child { margin-bottom: 0; }
 }
 .showstrip__meta { color: var(--ink-soft); font-size: 0.95rem; margin: 0; }
 .showstrip__cta { flex: none; }
+.showstrip__actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
+/* Compact single-field form (the date-announcement sign-up) */
+.form--inline {
+  max-width: 560px;
+  margin-inline: auto;
+  padding: clamp(20px, 3vw, 28px);
+}
+.notify {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+}
+.notify .field { flex: 1 1 240px; }
+.notify .btn { flex: none; }
+@media (max-width: 520px) {
+  .notify { flex-direction: column; }
+  .notify .btn { width: 100%; }
+}
+
+.dates__alt {
+  text-align: center;
+  margin-top: 22px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+/* Countdown + season date rows: unused while dates are TBD, kept ready for the
+   day the first date is announced. See "Adding the dates back" in the README. */
 .countdown {
   display: grid;
   grid-template-columns: repeat(4, minmax(56px, 1fr));
@@ -568,7 +597,7 @@ p:last-child { margin-bottom: 0; }
 .schedule__what span { color: var(--ink-soft); font-size: 0.95rem; }
 @media (max-width: 640px) { .schedule li { grid-template-columns: 1fr; gap: 4px; } }
 
-/* Season dates */
+/* Season dates (dormant until dates are announced — see README) */
 .dates { display: grid; gap: 14px; }
 .date-row {
   display: flex;

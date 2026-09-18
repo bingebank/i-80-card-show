@@ -36,7 +36,9 @@ in context.
       Embed a map → copy the `src`). Also fill in the `location` block in the
       structured data at the bottom of the file, and put the venue back into the
       next-show strip and the show-date rows.
-- [ ] **Show dates** — three places, and they need to agree:
+- [ ] **Show dates** — currently TBD by design: the site runs a "dates announcing soon"
+      strip and an email capture instead of a countdown. See "Adding the dates back" below
+      when the venue is signed. When you do, three places need to agree:
       1. The `<time datetime="2026-11-14T09:00-08:00">` in the next-show strip (this drives
          the countdown). Keep the Pacific offset: `-08:00` in winter, `-07:00` during
          daylight saving, so the clock is right for out-of-town visitors.
@@ -246,6 +248,120 @@ later is perfectly normal.
 `_headers` and `_redirects` in the repo root are read by Pages automatically — they set
 caching and security headers, and the `/ig` short link that forwards to Instagram (handy on
 a flyer or a table sign).
+
+---
+
+## Adding the dates back
+
+Dates are TBD, so the site currently runs an announcement strip and an email capture
+instead of a countdown and a season calendar. The CSS and JavaScript for both are still in
+place — nothing to rebuild, just markup to paste back.
+
+### 1. The countdown
+
+In `index.html`, replace the contents of `.showstrip__inner` with:
+
+```html
+<div class="showstrip__when">
+  <span class="showstrip__label">Next show</span>
+  <p class="showstrip__date">
+    <time id="next-show-date" datetime="2027-03-13T09:00-08:00">Sat, March 13, 2027</time>
+  </p>
+  <p class="showstrip__meta">9:00 AM – 3:00 PM · Venue name · Sacramento</p>
+</div>
+
+<div class="countdown" id="countdown" aria-live="polite">
+  <div class="countdown__unit"><span class="countdown__num" data-unit="days">--</span><span class="countdown__label">Days</span></div>
+  <div class="countdown__unit"><span class="countdown__num" data-unit="hours">--</span><span class="countdown__label">Hours</span></div>
+  <div class="countdown__unit"><span class="countdown__num" data-unit="minutes">--</span><span class="countdown__label">Min</span></div>
+  <div class="countdown__unit"><span class="countdown__num" data-unit="seconds">--</span><span class="countdown__label">Sec</span></div>
+</div>
+
+<a class="btn btn--red showstrip__cta" href="#venue">Get directions</a>
+```
+
+`main.js` wires the clock up on its own — it reads that `datetime` attribute and nothing
+else. **Keep the Pacific offset on the end:** `-08:00` in winter, `-07:00` during daylight
+saving, so the countdown is right for out-of-town visitors too.
+
+### 2. The season calendar
+
+In the `#dates` section, swap the sign-up form for rows like these (styles already written):
+
+```html
+<div class="dates">
+  <div class="date-row date-row--next">
+    <div class="date-row__date">Sat, Mar 13, 2027</div>
+    <div class="date-row__meta">9:00 AM – 3:00 PM · Venue name · Spring show</div>
+    <span class="tag">Next show</span>
+  </div>
+  <div class="date-row">
+    <div class="date-row__date">Sat, Jun 12, 2027</div>
+    <div class="date-row__meta">9:00 AM – 3:00 PM · Venue name · Summer show</div>
+    <span class="tag tag--muted">Tables open</span>
+  </div>
+</div>
+```
+
+Move `date-row--next` and the "Next show" tag along as each show passes.
+
+### 3. The Event structured data
+
+The page currently publishes an `Organization` block, not an `Event` — an Event carrying a
+placeholder date can put a wrong date straight into Google's results. Once a real date
+exists, add this **alongside** the existing block at the bottom of `index.html`:
+
+```html
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "I-80 Card Show",
+  "description": "Sacramento-area Pokemon and TCG card show with 50+ dealer tables.",
+  "startDate": "2027-03-13T09:00-08:00",
+  "endDate": "2027-03-13T15:00-08:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "url": "https://www.i80cardshow.com/",
+  "image": "https://www.i80cardshow.com/assets/img/og-image.jpg",
+  "location": {
+    "@type": "Place",
+    "name": "Venue name",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 Example Ave",
+      "addressLocality": "Sacramento",
+      "addressRegion": "CA",
+      "postalCode": "95814",
+      "addressCountry": "US"
+    }
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "I-80 Card Show",
+    "url": "https://www.i80cardshow.com/"
+  },
+  "offers": {
+    "@type": "Offer",
+    "name": "General admission",
+    "price": "10",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://www.i80cardshow.com/",
+    "validFrom": "2026-01-01T00:00-08:00"
+  }
+}
+</script>
+```
+
+Check it afterwards with Google's [Rich Results Test](https://search.google.com/test/rich-results).
+
+### 4. The rest
+
+- Vendor form: replace the generic "which show" options in `vendors.html` with real dates.
+- Venue section: swap the `.soon` panel for the address, parking notes and a Maps embed.
+- Day-of schedule: confirm the times and drop the "exact times get confirmed" line.
+- Announcement email: everyone who signed up through the `#dates` form is waiting on it.
 
 ## Editing tips
 

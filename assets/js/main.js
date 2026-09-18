@@ -105,7 +105,8 @@
   };
 
   function setError(field, message) {
-    var slot = document.querySelector('[data-error-for="' + field.name + '"]');
+    var scope = field.form || document;
+    var slot = scope.querySelector('[data-error-for="' + field.name + '"]');
     if (message) {
       field.setAttribute('aria-invalid', 'true');
       if (slot) slot.textContent = message;
@@ -129,16 +130,19 @@
   }
 
   function showStatus(el, message, ok) {
+    if (!el) return;
     el.textContent = message;
     el.className = 'form-status is-visible ' + (ok ? 'form-status--ok' : 'form-status--err');
   }
 
-  function initForm() {
-    var form = document.getElementById('vendor-form');
-    if (!form) return;
-
-    var status = document.getElementById('form-status');
+  function initForm(form) {
+    var status = form.querySelector('.form-status');
     var submit = form.querySelector('button[type="submit"]');
+    var submitLabel = submit ? submit.textContent : '';
+    var fallback = form.getAttribute('data-fallback') ||
+      'This form isn’t switched on yet. Please email info@i80cardshow.com instead.';
+    var success = form.getAttribute('data-success') || 'Thanks — we’ve got it.';
+
     var fields = Array.prototype.slice.call(
       form.querySelectorAll('input[name], select[name], textarea[name]')
     ).filter(function (f) {
@@ -172,22 +176,16 @@
         return;
       }
 
-      // No endpoint wired up yet: don't let the request vanish into a reload.
-      // See the TODO(setup) comment above the form in vendors.html.
+      // No endpoint wired up yet: don't let the submission vanish into a reload.
+      // See the TODO(setup) comment above each form.
       var action = form.getAttribute('action');
       if (!action) {
         e.preventDefault();
-        showStatus(
-          status,
-          'Online sign-ups aren’t switched on yet. Please email info@i80cardshow.com ' +
-          'with your name, phone number, how many tables you need and what you sell, ' +
-          'and we’ll get you on the vendor list.',
-          false
-        );
+        showStatus(status, fallback, false);
         return;
       }
 
-      // Submit to Formspree (or any JSON-friendly endpoint) without leaving the page.
+      // Post to Formspree without leaving the page.
       if (window.fetch && /formspree\.io/.test(action)) {
         e.preventDefault();
         if (submit) { submit.disabled = true; submit.textContent = 'Sending…'; }
@@ -199,11 +197,7 @@
         }).then(function (res) {
           if (!res.ok) throw new Error('Request failed');
           form.reset();
-          showStatus(
-            status,
-            'Thanks — you’re on the vendor list. We’ll confirm your table and send payment details within two business days.',
-            true
-          );
+          showStatus(status, success, true);
         }).catch(function () {
           showStatus(
             status,
@@ -211,7 +205,7 @@
             false
           );
         }).then(function () {
-          if (submit) { submit.disabled = false; submit.textContent = 'Send my sign-up'; }
+          if (submit) { submit.disabled = false; submit.textContent = submitLabel; }
         });
         return;
       }
@@ -221,13 +215,18 @@
     });
   }
 
+  function initForms() {
+    var forms = document.querySelectorAll('form[data-validate]');
+    for (var i = 0; i < forms.length; i++) initForm(forms[i]);
+  }
+
   /* --------------------------------------------------------------- Boot ---- */
 
   function init() {
     initNav();
     initCountdown();
     initYear();
-    initForm();
+    initForms();
   }
 
   if (document.readyState === 'loading') {
