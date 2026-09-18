@@ -109,6 +109,48 @@
     </div>
   </section>
 
+  <!-- ====================== THE FORK ====================== -->
+  <!-- Two audiences, two paths. Everything above this point is the pitch;
+       everything below is detail for whichever path they picked. -->
+  <section class="fork" aria-labelledby="fork-heading">
+    <div class="wrap">
+      <h2 class="visually-hidden" id="fork-heading">Choose your path</h2>
+      <div class="fork__grid">
+
+        <article class="fork__card">
+          <span class="fork__tag">Collectors</span>
+          <h3>Coming to shop</h3>
+          <p>50+ tables of Pokémon, TCG and sports cards, all in one room off I-80.</p>
+          <ul class="fork__points">
+            <li>$10 at the door, kids 10 and under free</li>
+            <li>Singles, sealed, slabs, vintage and dollar bins</li>
+            <li>Dealers buying collections on the spot</li>
+          </ul>
+          <div class="fork__actions">
+            <a class="btn btn--primary" href="#dates">Email me the date</a>
+            <a class="link-arrow" href="#show">See what's in the room &rarr;</a>
+          </div>
+        </article>
+
+        <article class="fork__card fork__card--vendor">
+          <span class="fork__tag">Dealers</span>
+          <h3>Setting up a table</h3>
+          <p>$200 per 8' table at a capped, promoted, 50+ table show.</p>
+          <ul class="fork__points">
+            <li>8' table, two chairs, two dealer admissions</li>
+            <li>Early setup and your shop in our show promo</li>
+            <li>No table held until payment clears — no waitlist games</li>
+          </ul>
+          <div class="fork__actions">
+            <a class="btn btn--red" href="vendors.html#reserve">Vendor sign-up</a>
+            <a class="link-arrow" href="vendors.html">Table details &amp; rules &rarr;</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ====================== FACT BAR ====================== -->
   <section class="factbar" aria-label="Show at a glance">
     <div class="wrap">
@@ -195,6 +237,18 @@
     </div>
   </section>
 
+  <!-- Mid-page catch: they've read the pitch, give them the step. -->
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>That's the room. Want in?</h2>
+      <p>Get the date in your inbox, or claim a table before the room fills.</p>
+      <div class="cta-band__actions">
+        <a class="btn btn--primary" href="#dates">Email me the date</a>
+        <a class="btn btn--ghost" href="vendors.html#reserve">Vendor sign-up</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ====================== SHOW DAY SCHEDULE ====================== -->
   <section class="section section--tint">
     <div class="wrap">
@@ -256,6 +310,8 @@
             novalidate>
 
         <input type="hidden" name="_subject" value="New I-80 Card Show date-announcement sign-up">
+        <!-- Tells you which part of the funnel the sign-up came from. -->
+        <input type="hidden" name="source" value="homepage-dates">
         <div class="hp" aria-hidden="true">
           <label for="notify-gotcha">Do not fill this in</label>
           <input type="text" id="notify-gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
@@ -464,6 +520,12 @@
     </div>
   </div>
 </footer>
+
+<!-- Sticky on phones only: the next step is always one tap away. -->
+<div class="cta-bar">
+  <a class="btn btn--primary" href="#dates">Get the date</a>
+  <a class="btn btn--red" href="vendors.html#reserve">Get a table</a>
+</div>
 
 <script src="assets/js/main.js" defer></script>
 

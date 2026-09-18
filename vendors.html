@@ -62,10 +62,12 @@
       <p>
         Pokémon, TCG, sports, sealed, slabs, supplies — if it belongs in a card show,
         it belongs here. Tables are <strong>$200</strong> each at our Sacramento show,
-        and we're capping the room at 50+ tables so every aisle gets real traffic. Fill
-        out the form below to get on the vendor list; we'll confirm your spot and send
-        payment details within two business days.
+        and we're capping the room at 50+ tables so every aisle gets real traffic.
       </p>
+      <div class="page-head__actions">
+        <a class="btn btn--primary" href="#reserve">Sign up for a table</a>
+        <a class="link-arrow link-arrow--light" href="#pricing">What's included &rarr;</a>
+      </div>
     </div>
   </section>
 
@@ -153,6 +155,8 @@
             novalidate>
 
         <input type="hidden" name="_subject" value="New I-80 Card Show vendor sign-up">
+        <!-- Tells you which part of the funnel the sign-up came from. -->
+        <input type="hidden" name="source" value="vendor-page">
 
         <!-- Honeypot: real people never see or fill this. Formspree treats a
              filled-in "_gotcha" field as spam and drops it. -->
@@ -465,6 +469,10 @@
     </div>
   </div>
 </footer>
+
+<div class="cta-bar">
+  <a class="btn btn--primary" href="#reserve">Sign up for a table</a>
+</div>
 
 <script src="assets/js/main.js" defer></script>
 </body>

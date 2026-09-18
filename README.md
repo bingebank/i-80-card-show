@@ -87,6 +87,10 @@ object in `assets/js/main.js`.
 
 It validates itself in the browser but needs somewhere to send submissions:
 
+There are **two** forms to connect — the vendor sign-up and the date-announcement capture
+on the homepage. Formspree's free tier allows multiple forms, so make one for each and you
+can tell the two lists apart.
+
 1. Create a free form at [formspree.io](https://formspree.io) and copy its endpoint.
 2. In `vendors.html`, paste it into the form's action:
    ```html
@@ -102,8 +106,12 @@ being bounced to another screen.
 The free tier covers 50 submissions a month, which is plenty for a vendor list; their paid
 tier is cheap if a show blows past it.
 
+Then do the same for the `#notify-form` in `index.html` with a second Formspree endpoint —
+that one collects the "email me the date" sign-ups.
+
 The hidden `_gotcha` field is a spam trap — leave it alone. Real visitors never see it, and
-Formspree drops any submission that fills it in.
+Formspree drops any submission that fills it in. The hidden `source` field tags each
+submission with where it came from, so you can see which part of the funnel is working.
 
 ---
 
@@ -250,6 +258,62 @@ caching and security headers, and the `/ig` short link that forwards to Instagra
 a flyer or a table sign).
 
 ---
+
+## How the funnel works
+
+The site has two jobs: get collectors onto the announcement list, and get dealers to sign up
+for tables. Everything else is in service of one of those two.
+
+### The path
+
+1. **Hero** — who we are, what's in the room, one line of proof.
+2. **Announcement strip** — the state of play ("dates announcing soon") plus both actions.
+3. **The fork** (`.fork`) — the split, high on the page so nobody reads the wrong half:
+   *Coming to shop* → the email capture. *Setting up a table* → the vendor page.
+4. **Fact bar** — the four numbers that qualify or disqualify someone instantly:
+   admission, kids, tables, table price.
+5. **What you'll find / how the day runs** — desire, for people who need convincing.
+6. **Mid-page CTA band** — the catch, right after the pitch lands.
+7. **Dates section** — the email capture itself.
+8. **Venue, vendor rate, FAQ** — detail and objection handling.
+9. **Closing CTA + footer** — last chance, plus Instagram as the low-commitment option.
+
+On phones a **sticky bar** (`.cta-bar`) pins both actions to the bottom of the screen, so the
+next step is one tap away no matter how far down someone has scrolled. It's hidden above
+900px, where the header button is always visible anyway.
+
+### The two conversions
+
+| | Collectors | Dealers |
+| --- | --- | --- |
+| Ask | One email address | The full sign-up form |
+| Where | `#dates` on the homepage | `vendors.html#reserve` |
+| Friction | Deliberately near zero | Deliberately higher — it qualifies |
+| You get | A list to announce the date to | A vendor with a permit number and a table count |
+
+The vendor form is long on purpose. Someone who won't answer twelve questions probably
+wasn't going to pay $200 and show up at 7am. The email capture is one field on purpose —
+that's a maybe, not a commitment, and you convert it later by email.
+
+### Knowing what's working
+
+- **Each form posts a hidden `source` field** (`homepage-dates`, `vendor-page`), so every
+  submission tells you which part of the funnel it came from. Add more entry points by
+  copying a form and changing that value.
+- **The vendor form asks "how did you hear about the show?"** — that's your channel data,
+  straight from the dealer.
+- **Turn on Cloudflare Web Analytics**: Cloudflare dashboard → your Pages project →
+  Analytics. One toggle, no code, no cookie banner, free. It gives you page views and
+  referrers without Google Analytics' bloat or privacy baggage.
+- **The `/ig` short link** in `_redirects` forwards to Instagram. Print it on flyers and
+  table signs; the redirect shows up in analytics, so you can see whether print is working.
+
+### If you want more from it later
+
+- A discount code or free-entry offer for the email list gives people a reason to sign up now.
+- A "dealers attending" section converts browsers — collectors come to see specific dealers.
+- Photos from the first show, once it happens. Nothing sells show two like a full room at
+  show one.
 
 ## Adding the dates back
 
