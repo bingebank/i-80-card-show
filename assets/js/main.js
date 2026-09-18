@@ -96,6 +96,7 @@
     email: 'Please enter an email address we can reply to.',
     emailFormat: 'That email address doesn’t look right.',
     phone: 'Please enter a phone number.',
+    city: 'Please tell us what city and state you’re coming from.',
     'show-date': 'Please choose which show you\u2019re signing up for.',
     tables: 'Please choose how many tables you need.',
     sells: 'Please tell us what you sell \u2014 it helps us lay out the room.',

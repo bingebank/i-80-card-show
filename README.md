@@ -46,8 +46,9 @@ in context.
 - [ ] **Email address** — currently `info@i80cardshow.com`, used in the footer, the FAQ,
       the vendor page and the form's fallback message (`assets/js/main.js`).
 - [ ] **Phone number** — currently `(555) 000-0000` in the footer and on the vendor page.
-- [ ] **Social links** — Facebook, Instagram and TikTok in the footer of every page.
-      Delete any you don't use.
+- [ ] **More social links** — Instagram (`@i80card_show`) is wired up across the site.
+      The Facebook and TikTok placeholders were removed rather than left pointing at dead
+      links; send me the URLs (or copy the Instagram `<a>` block in the footer) to add them.
 - [ ] **Connect the vendor sign-up form** — see below. Until you do, the form tells
       visitors to email instead, so nothing gets lost.
 
@@ -55,10 +56,20 @@ in context.
 
 ## The vendor sign-up form
 
-`vendors.html` is the vendor sign-up page. The form asks for: name, business/table name,
-email, phone, **how many tables**, which show, **what they sell**, whether they're a
-returning dealer, shop website or social, whether they need power, whether to keep them on
-the vendor mailing list, free-text notes, and agreement to the rules.
+`vendors.html` is the vendor sign-up page. The form is grouped into three sections:
+
+**Your details** — name*, business/table name, email*, phone*, city & state*, shop website
+or social.
+
+**Your table** — how many tables*, which show*, what they sell*, whether they're buying at
+their table, whether they're running live breaks or streaming, extra dealer badges needed,
+sales tax ID / seller's permit, table placement request, power needed, door-prize donation.
+
+**Last couple of things** — returning dealer, how they heard about the show, free-text
+notes, vendor mailing list opt-in, and agreement to the rules*.
+
+Fields marked * are required. The sales tax ID is optional — if your state wants a permit on
+file before setup, add `required` to that input and a `taxid` message in `assets/js/main.js`.
 
 To add a question, copy any `.field` block in the form and give it a new `id`/`name`. If it
 should be required, add `required` to the input and a matching message in the `MESSAGES`
