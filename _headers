@@ -1,0 +1,19 @@
+# Cloudflare Pages response headers.
+# https://developers.cloudflare.com/pages/configuration/headers/
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
+
+# Images rarely change — cache them hard.
+/assets/img/*
+  Cache-Control: public, max-age=2592000
+
+# CSS and JS aren't fingerprinted, so keep the cache short enough that an edit
+# goes live the same day.
+/assets/css/*
+  Cache-Control: public, max-age=3600
+/assets/js/*
+  Cache-Control: public, max-age=3600

@@ -14,12 +14,13 @@ push it, and it's live.
 | --- | --- |
 | `index.html` | The whole homepage: hero, next show, show info, schedule, dates, venue, table pricing, FAQ |
 | `vendors.html` | Vendor sign-up page: table rate, the sign-up form, and vendor rules |
-| `thanks.html` | Confirmation page after a form submission (used by Netlify Forms) |
+| `thanks.html` | Confirmation page, for form endpoints that redirect instead of posting in the background |
 | `404.html` | Page-not-found page |
 | `assets/css/styles.css` | All styling. Colors live in the `:root` block at the top |
 | `assets/js/main.js` | Mobile menu, countdown clock, form validation |
 | `assets/img/` | Logo, favicons, social share image |
-| `CNAME` | Tells GitHub Pages to serve the site at `www.i80cardshow.com` |
+| `_headers` | Cloudflare Pages: caching and security headers |
+| `_redirects` | Cloudflare Pages: the `/ig` short link to Instagram |
 | `sitemap.xml`, `robots.txt` | Search engine basics |
 
 ---
@@ -46,10 +47,12 @@ in context.
       50+ tables, $200 per 8' table. They appear in the fact bar, FAQ and rate card on
       `index.html`, and in the rate card, page intro and table dropdown on `vendors.html`.
       The dropdown lists multiples of $200 — change it if you offer a multi-table discount.
-- [ ] **Email address** — the site already uses `info@i80cardshow.com` in the footer, the
-      FAQ, the vendor page and the form's fallback message (`assets/js/main.js`). Set the
-      mailbox up (see "Email at i80cardshow.com" below) and nothing on the site changes.
-- [ ] **Phone number** — currently `(555) 000-0000` in the footer and on the vendor page.
+- [ ] **Email** — set up Cloudflare Email Routing so `info@i80cardshow.com` forwards to
+      `bingebank@gmail.com` (see "Email at i80cardshow.com" below). The site already uses
+      that address everywhere, so nothing on the site changes.
+- [ ] **Phone number** — there isn't one on the site. The placeholder was removed rather
+      than shipped; contact runs through email and Instagram DMs. Send me a number if you
+      want one in the footer.
 - [ ] **More social links** — Instagram (`@i80card_show`) is wired up across the site.
       The Facebook and TikTok placeholders were removed rather than left pointing at dead
       links; send me the URLs (or copy the Instagram `<a>` block in the footer) to add them.
@@ -80,121 +83,118 @@ To add a question, copy any `.field` block in the form and give it a new `id`/`n
 should be required, add `required` to the input and a matching message in the `MESSAGES`
 object in `assets/js/main.js`.
 
-It validates itself in the browser but needs somewhere to send submissions. Pick one:
-
-### Option A — Formspree (works on any host)
+It validates itself in the browser but needs somewhere to send submissions:
 
 1. Create a free form at [formspree.io](https://formspree.io) and copy its endpoint.
-2. In `vendors.html`, set the form's action:
+2. In `vendors.html`, paste it into the form's action:
    ```html
    <form class="form" id="vendor-form" method="POST"
          action="https://formspree.io/f/YOUR_FORM_ID" novalidate>
    ```
-3. Delete the `data-netlify="true"` and `netlify-honeypot="company-website"` attributes.
 
-Submissions land in your email and the visitor stays on the page — `main.js` posts it in the
-background and shows a confirmation message.
+That's it. Sign-ups land in whatever inbox you registered with Formspree — point it at
+`info@i80cardshow.com` once Email Routing is live. `main.js` posts the form in the
+background, so the visitor stays on the page and gets a confirmation message instead of
+being bounced to another screen.
 
-### Option B — Netlify Forms (only if you host on Netlify)
+The free tier covers 50 submissions a month, which is plenty for a vendor list; their paid
+tier is cheap if a show blows past it.
 
-1. Leave `data-netlify="true"` in place.
-2. Set `action="/thanks.html"`.
-3. Deploy to Netlify. Submissions show up under Forms in the Netlify dashboard.
-
-Either way, the hidden `company-website` field is a spam trap — leave it alone. Real visitors
-never see it; bots that fill it in get filtered.
+The hidden `_gotcha` field is a spam trap — leave it alone. Real visitors never see it, and
+Formspree drops any submission that fills it in.
 
 ---
 
 ## Email at i80cardshow.com
 
-The site uses **info@i80cardshow.com** throughout (footer, FAQ, vendor page, and the form's
-fallback message). Set that mailbox up and the site needs no changes.
+**info@i80cardshow.com** forwards to **bingebank@gmail.com** using Cloudflare Email Routing.
+It's free, and the site already uses that address everywhere (footer, FAQ, vendor page, and
+the form's fallback message), so nothing on the site needs to change.
 
-Domain is registered at **GoDaddy**, so all records below go in
-GoDaddy → My Products → Domains → i80cardshow.com → **DNS → Manage Zones**.
+This requires your DNS to be on Cloudflare — see step 1 of Publishing below.
 
-Email records (MX, TXT) are completely separate from the website records (A, CNAME) that
-point at GitHub Pages. Adding email will not affect the site.
+### Setting it up
 
-### Setting up Google Workspace
+1. Cloudflare dashboard → your domain → **Email → Email Routing → Get started**.
+2. Cloudflare offers to add the MX and TXT records for you. Accept — it replaces GoDaddy's
+   default `secureserver.net` MX records, which is what you want.
+3. Add a destination address: `bingebank@gmail.com`. Cloudflare emails it a verification
+   link — click it.
+4. Create the route: custom address `info@i80cardshow.com` → send to `bingebank@gmail.com`.
+5. Optionally add a **catch-all** so anything sent to `@i80cardshow.com` reaches you too —
+   worth it for the inevitable `vendors@`, `hello@` and typos. It also means you can print
+   any address you like without setting it up first.
 
-1. Sign up at [workspace.google.com](https://workspace.google.com) and enter
-   `i80cardshow.com` as your domain. Business Starter is the cheapest plan that gives a
-   real mailbox — check current pricing, it's roughly $7–8 per user per month.
-2. **Verify the domain.** Google gives you a TXT record. In GoDaddy:
-   - Type `TXT`, Name `@`, Value `google-site-verification=...` (the string Google gives you)
-3. **Delete GoDaddy's default MX records.** GoDaddy pre-fills MX records pointing at
-   `secureserver.net`. If you leave them, mail breaks. Remove every existing MX record first.
-4. **Add Google's MX record:**
+Test it by emailing `info@i80cardshow.com` from an outside account. Delivery is usually
+instant once DNS is active.
 
-   | Type | Name | Value | Priority | TTL |
-   | --- | --- | --- | --- | --- |
-   | MX | `@` | `smtp.google.com` | 1 | 1 hour |
+### The catch, and how to fix it later
 
-5. **Add SPF** so your mail doesn't land in spam:
+Email Routing **forwards only**. Mail arrives in your Gmail, but when you hit reply it goes
+out as `bingebank@gmail.com`, not `info@i80cardshow.com`. For vendors sending $200 that's a
+small credibility hit.
 
-   | Type | Name | Value |
-   | --- | --- | --- |
-   | TXT | `@` | `v=spf1 include:_spf.google.com ~all` |
+If that starts to matter, Gmail can send *as* your domain address — Gmail → Settings → Accounts →
+"Send mail as" — but it needs an SMTP server, which Email Routing doesn't provide. Options:
 
-   Only one SPF record per domain — if one already exists, merge them rather than adding a second.
-6. **Turn on DKIM.** In the Google Admin console: Apps → Google Workspace → Gmail →
-   Authenticate email → Generate new record. Add what it gives you:
+- A free SMTP relay (Resend, SMTP2GO, Brevo all have free tiers) wired into Gmail's "Send mail as".
+- A real mailbox instead: **Zoho Mail** free plan, or **Google Workspace** at roughly $7–8 per
+  user per month. Either replaces the forwarding rule; the MX records change, nothing else does.
 
-   | Type | Name | Value |
-   | --- | --- | --- |
-   | TXT | `google._domainkey` | the long `v=DKIM1; k=rsa; p=...` string |
-
-   Then come back to the admin console and click **Start authentication**.
-7. **Add DMARC** (start permissive, tighten later once mail is flowing):
-
-   | Type | Name | Value |
-   | --- | --- | --- |
-   | TXT | `_dmarc` | `v=DMARC1; p=none; rua=mailto:info@i80cardshow.com` |
-
-8. **Add aliases instead of paying for more mailboxes.** In Admin → Directory → Users → your
-   user → Add alternate email. `vendors@`, `hello@` and the like all land in the same inbox
-   at no extra cost.
-
-DNS changes usually take effect within an hour but can take up to 48. Test by emailing the
-address from an outside account, and check the result at
-[mail-tester.com](https://www.mail-tester.com) to confirm SPF/DKIM/DMARC all pass.
-
-### The cheaper alternatives
-
-- **Cloudflare Email Routing** — free, forwards `info@i80cardshow.com` to an existing Gmail.
-  Receiving only: replies come from your personal address unless you add a sending service.
-  Requires moving DNS from GoDaddy to Cloudflare (also free, and faster DNS).
-- **Zoho Mail free plan** — a real send-and-receive mailbox at your domain for $0, with the
-  same MX/SPF/DKIM steps as above but Zoho's values (`mx.zoho.com` priority 10,
-  `mx2.zoho.com` 20, `mx3.zoho.com` 50; SPF `v=spf1 include:zoho.com ~all`).
-- **GoDaddy's own Microsoft 365 email** — the least DNS work, since GoDaddy configures its
-  own zone automatically. Watch the renewal pricing.
+Start with forwarding. It takes five minutes and costs nothing — upgrade when the show is
+running and the reply address starts to bug you.
 
 ---
 
-## Publishing
+## Publishing — Cloudflare Pages
 
-### GitHub Pages (free, already configured)
+The site is a plain static folder: no build step, no dependencies. Cloudflare Pages serves it
+straight from the repo.
 
-1. Push to the `main` branch.
-2. In the repository: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-   The workflow in `.github/workflows/pages.yml` handles the rest.
-3. Under **Settings → Pages → Custom domain**, enter `www.i80cardshow.com`.
-   The `CNAME` file in this repo already sets it.
-4. At your domain registrar, point DNS at GitHub:
-   - `www` → CNAME → `<your-github-username>.github.io`
-   - root domain (`i80cardshow.com`) → A records → `185.199.108.153`, `185.199.109.153`,
-     `185.199.110.153`, `185.199.111.153`
-5. Tick **Enforce HTTPS** once the certificate is issued (can take up to an hour).
+### 1. Point the domain at Cloudflare
 
-### Netlify / Cloudflare Pages / any web host
+Cloudflare needs to run your DNS before Pages custom domains or Email Routing will work.
+You do **not** have to move the registration away from GoDaddy to do this.
 
-Drag the folder in, or connect the repo. There's nothing to build — publish directory is the
-repository root. If you use Netlify, delete `CNAME` and set the domain in the Netlify dashboard.
+1. Create a free account at [cloudflare.com](https://cloudflare.com) → **Add a site** →
+   `i80cardshow.com` → Free plan.
+2. Cloudflare scans your existing DNS records. Check the list it imports, then continue.
+3. It gives you two nameservers (something like `xxx.ns.cloudflare.com`).
+4. In GoDaddy: My Products → Domains → i80cardshow.com → **Nameservers → Change** →
+   "I'll use my own nameservers" → paste both Cloudflare nameservers.
+5. Wait for Cloudflare to confirm the zone is active — usually minutes, occasionally a few hours.
 
----
+Optional, later: **transfer the registration** to Cloudflare Registrar (Domains → Transfer).
+It sells at wholesale cost with no markup, but a domain can't be transferred within 60 days
+of registration or of a recent registrant change. Moving nameservers now and transferring
+later is perfectly normal.
+
+### 2. Deploy the site
+
+1. Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git**.
+2. Pick this repository and the branch you want to publish (`main`).
+3. Build settings:
+   - Framework preset: **None**
+   - Build command: **leave empty**
+   - Build output directory: **`/`**
+4. Save and deploy. Every push to that branch redeploys automatically, and pull requests get
+   their own preview URL.
+
+### 3. Add the custom domain
+
+1. In your Pages project → **Custom domains → Set up a custom domain** → `www.i80cardshow.com`.
+   Cloudflare adds the DNS record for you.
+2. Add `i80cardshow.com` (the bare domain) the same way.
+3. The site's canonical URLs are the `www` ones, so send the bare domain to `www` instead of
+   serving both: dashboard → your domain → **Rules → Redirect Rules → Create rule**
+   - If: Hostname equals `i80cardshow.com`
+   - Then: Dynamic redirect, status **301**, expression
+     `concat("https://www.i80cardshow.com", http.request.uri.path)`
+   - Preserve query string: on
+
+`_headers` and `_redirects` in the repo root are read by Pages automatically — they set
+caching and security headers, and the `/ig` short link that forwards to Instagram (handy on
+a flyer or a table sign).
 
 ## Editing tips
 

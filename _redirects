@@ -1,0 +1,9 @@
+# Cloudflare Pages redirects.
+# https://developers.cloudflare.com/pages/configuration/redirects/
+#
+# Short links, handy on flyers and table signs:
+/ig         https://www.instagram.com/i80card_show/  302
+/instagram  https://www.instagram.com/i80card_show/  302
+
+# The apex -> www redirect is NOT set here — it's a Redirect Rule in the
+# Cloudflare dashboard (see the README), because Pages serves both hostnames.

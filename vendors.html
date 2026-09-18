@@ -130,35 +130,32 @@
       </div>
 
       <!-- ==================================================================
-           TODO(setup): connect this form before launch. Two easy options:
+           TODO(setup): connect this form before launch.
 
-           1. Formspree (works on any host) — create a free form at
-              formspree.io, then set:
-                  action="https://formspree.io/f/YOUR_FORM_ID"
-              and delete the data-netlify attributes below.
+           Create a free form at formspree.io, then paste its endpoint into
+           the action below:
 
-           2. Netlify Forms (only if you host on Netlify) — leave
-              data-netlify="true" and set action="/thanks.html". No account
-              setup needed beyond deploying to Netlify.
+               action="https://formspree.io/f/YOUR_FORM_ID"
 
-           Until one of these is set, the form shows a message telling the
-           visitor to email instead, so nothing silently disappears.
+           That's the whole job. main.js posts it in the background so the
+           visitor stays on the page and sees a confirmation message.
+
+           Until an action is set, the form tells the visitor to email
+           instead, so no sign-up silently disappears.
            ================================================================== -->
       <form class="form"
             id="vendor-form"
             method="POST"
             action=""
-            data-netlify="true"
-            netlify-honeypot="company-website"
             novalidate>
 
-        <input type="hidden" name="form-name" value="vendor-signup">
         <input type="hidden" name="_subject" value="New I-80 Card Show vendor sign-up">
 
-        <!-- Honeypot: real people never see or fill this. -->
+        <!-- Honeypot: real people never see or fill this. Formspree treats a
+             filled-in "_gotcha" field as spam and drops it. -->
         <div class="hp" aria-hidden="true">
-          <label for="company-website">Do not fill this in</label>
-          <input type="text" id="company-website" name="company-website" tabindex="-1" autocomplete="off">
+          <label for="_gotcha">Do not fill this in</label>
+          <input type="text" id="_gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
         </div>
 
         <fieldset>
@@ -398,9 +395,8 @@
   <section class="cta-band">
     <div class="wrap">
       <h2>Questions before you sign up?</h2>
-      <p>Call or email and we'll walk you through the floor plan, what's left, and where you'd fit best.</p>
+      <p>Email us or send a DM and we'll walk you through the floor plan, what's left, and where you'd fit best.</p>
       <div class="cta-band__actions">
-        <!-- TODO(content): replace with your real email and phone number. -->
         <a class="btn btn--primary" href="mailto:info@i80cardshow.com">Email the show</a>
         <a class="btn btn--ghost" href="https://www.instagram.com/i80card_show/" target="_blank" rel="noopener">DM @i80card_show</a>
       </div>
@@ -455,7 +451,6 @@
         <h3>Contact</h3>
         <ul class="footer__links">
           <li><a href="mailto:info@i80cardshow.com">info@i80cardshow.com</a></li>
-          <li><a href="tel:+15550000000">(555) 000-0000</a></li>
           <li><a href="https://www.instagram.com/i80card_show/" target="_blank" rel="noopener">@i80card_show</a></li>
         </ul>
       </div>

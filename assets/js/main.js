@@ -142,7 +142,7 @@
     var fields = Array.prototype.slice.call(
       form.querySelectorAll('input[name], select[name], textarea[name]')
     ).filter(function (f) {
-      return f.type !== 'hidden' && f.name !== 'company-website';
+      return f.type !== 'hidden' && f.name !== '_gotcha';
     });
 
     // Clear a field's error as soon as the visitor fixes it.
@@ -216,7 +216,7 @@
         return;
       }
 
-      // Anything else (e.g. Netlify Forms) posts normally.
+      // Any other endpoint posts normally and lands on its own thank-you page.
       if (submit) { submit.disabled = true; submit.textContent = 'Sending…'; }
     });
   }
