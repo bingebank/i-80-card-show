@@ -47,9 +47,9 @@ in context.
       50+ tables, $200 per 8' table. They appear in the fact bar, FAQ and rate card on
       `index.html`, and in the rate card, page intro and table dropdown on `vendors.html`.
       The dropdown lists multiples of $200 — change it if you offer a multi-table discount.
-- [ ] **Email** — set up Cloudflare Email Routing so `info@i80cardshow.com` forwards to
-      `bingebank@gmail.com` (see "Email at i80cardshow.com" below). The site already uses
-      that address everywhere, so nothing on the site changes.
+- [ ] **Email** — set up `info@i80cardshow.com` on Zoho Mail's free plan (see
+      "Email at i80cardshow.com" below). The site already uses that address everywhere,
+      so nothing on the site changes.
 - [ ] **Phone number** — there isn't one on the site. The placeholder was removed rather
       than shipped; contact runs through email and Instagram DMs. Send me a number if you
       want one in the footer.
@@ -107,42 +107,93 @@ Formspree drops any submission that fills it in.
 
 ## Email at i80cardshow.com
 
-**info@i80cardshow.com** forwards to **bingebank@gmail.com** using Cloudflare Email Routing.
-It's free, and the site already uses that address everywhere (footer, FAQ, vendor page, and
-the form's fallback message), so nothing on the site needs to change.
+The site uses **info@i80cardshow.com** everywhere (footer, FAQ, vendor page, and the form's
+fallback message), so once the mailbox exists nothing on the site changes.
 
-This requires your DNS to be on Cloudflare — see step 1 of Publishing below.
+**Current plan: Zoho Mail's free tier** — a real mailbox that sends *and* receives as
+`info@i80cardshow.com`, at no cost. Zoho works fine with Cloudflare DNS; you just add its
+records in the Cloudflare dashboard.
 
-### Setting it up
+> Only one mail provider can own your MX records. If you ever switch on Cloudflare Email
+> Routing, turn it off before pointing MX at Zoho, or mail will bounce.
 
-1. Cloudflare dashboard → your domain → **Email → Email Routing → Get started**.
-2. Cloudflare offers to add the MX and TXT records for you. Accept — it replaces GoDaddy's
-   default `secureserver.net` MX records, which is what you want.
-3. Add a destination address: `bingebank@gmail.com`. Cloudflare emails it a verification
-   link — click it.
-4. Create the route: custom address `info@i80cardshow.com` → send to `bingebank@gmail.com`.
-5. Optionally add a **catch-all** so anything sent to `@i80cardshow.com` reaches you too —
-   worth it for the inevitable `vendors@`, `hello@` and typos. It also means you can print
-   any address you like without setting it up first.
+### Setting up Zoho Mail (free)
 
-Test it by emailing `info@i80cardshow.com` from an outside account. Delivery is usually
-instant once DNS is active.
+1. Go to [zoho.com/mail](https://www.zoho.com/mail/) → pricing → scroll to the bottom for
+   the **Forever Free Plan** (it's below the paid tiers, easy to miss). Sign up with
+   `i80cardshow.com` as your domain.
+2. **Verify the domain.** Zoho gives you a TXT (or CNAME) record. In Cloudflare →
+   your domain → **DNS → Records → Add record**, paste exactly what Zoho shows.
+   If Zoho hands you a CNAME, set the proxy toggle to **DNS only** (grey cloud) or
+   verification fails.
+3. **Create the mailbox** `info@i80cardshow.com` when Zoho prompts for the first user.
+4. **Add the MX records** (US data centre values — use whatever Zoho shows you, they differ
+   by region):
 
-### The catch, and how to fix it later
+   | Type | Name | Mail server | Priority |
+   | --- | --- | --- | --- |
+   | MX | `@` | `mx.zoho.com` | 10 |
+   | MX | `@` | `mx2.zoho.com` | 20 |
+   | MX | `@` | `mx3.zoho.com` | 50 |
 
-Email Routing **forwards only**. Mail arrives in your Gmail, but when you hit reply it goes
-out as `bingebank@gmail.com`, not `info@i80cardshow.com`. For vendors sending $200 that's a
-small credibility hit.
+   Delete any other MX records first — GoDaddy's `secureserver.net` ones, and Cloudflare's
+   Email Routing ones if you turned that on.
 
-If that starts to matter, Gmail can send *as* your domain address — Gmail → Settings → Accounts →
-"Send mail as" — but it needs an SMTP server, which Email Routing doesn't provide. Options:
+5. **Add SPF:**
 
-- A free SMTP relay (Resend, SMTP2GO, Brevo all have free tiers) wired into Gmail's "Send mail as".
-- A real mailbox instead: **Zoho Mail** free plan, or **Google Workspace** at roughly $7–8 per
-  user per month. Either replaces the forwarding rule; the MX records change, nothing else does.
+   | Type | Name | Content |
+   | --- | --- | --- |
+   | TXT | `@` | `v=spf1 include:zoho.com ~all` |
 
-Start with forwarding. It takes five minutes and costs nothing — upgrade when the show is
-running and the reply address starts to bug you.
+   One SPF record per domain — merge, don't add a second.
+
+6. **Add DKIM.** In Zoho Mail Admin → Domains → your domain → Email Configuration → DKIM →
+   Add selector. Zoho gives you a selector (usually `zmail`) and a long key:
+
+   | Type | Name | Content |
+   | --- | --- | --- |
+   | TXT | `zmail._domainkey` | the `v=DKIM1; k=rsa; p=...` string from Zoho |
+
+7. **Add DMARC:**
+
+   | Type | Name | Content |
+   | --- | --- | --- |
+   | TXT | `_dmarc` | `v=DMARC1; p=none; rua=mailto:info@i80cardshow.com` |
+
+8. **Add aliases, not users.** In Zoho Admin → Users → your user → Mail Aliases, add
+   `vendors@`, `hello@`, whatever you want. Aliases are free and land in the same inbox;
+   extra *users* eat into your five.
+
+Test by emailing the address from an outside account, then send one to
+[mail-tester.com](https://www.mail-tester.com) to confirm SPF, DKIM and DMARC pass.
+
+### What "free" costs you
+
+Zoho's free plan is genuinely free, but check the current terms when you sign up — they've
+tightened it over the years. As it stands:
+
+- **Webmail and Zoho's own mobile app only.** No IMAP, POP or SMTP on the free tier, which
+  means it will *not* plug into the Gmail app, Apple Mail or Outlook. You check it at
+  mail.zoho.com or in the Zoho Mail app — one more app on your phone.
+- Up to 5 users, 5 GB each, one domain, 25 MB attachment cap.
+
+If the separate-app thing wears thin, **Zoho Mail Lite is about $1 per user per month** and
+adds IMAP/POP/SMTP — at which point you can run it through Gmail properly, or use Gmail's
+"Send mail as" to send from `info@i80cardshow.com` inside your normal inbox. That's the
+cheapest real upgrade and worth remembering before anyone talks you into Google Workspace
+at $7.
+
+### The other free option (for reference)
+
+**Cloudflare Email Routing** forwards `info@i80cardshow.com` to `bingebank@gmail.com` for
+free, in about five minutes, with no extra app — everything lands in the Gmail you already
+check. The catch is that it only *receives*: hit reply and it goes out as
+`bingebank@gmail.com`. Fine for a personal project, less good when a vendor is deciding
+whether to send you $200.
+
+Zoho free trades convenience for looking legitimate. Routing trades looking legitimate for
+convenience. Nothing stops you switching later — it's a DNS change, and the site doesn't
+care either way.
 
 ---
 
