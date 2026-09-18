@@ -64,7 +64,7 @@
 
       if (diff <= 0) {
         box.innerHTML = '<p style="grid-column:1/-1;text-align:center;font-weight:700;margin:0">' +
-          'Show day is here — doors open at 8:00 AM for early buyers.</p>';
+          'Show day is here — doors open at 9:00 AM. See you there.</p>';
         clearInterval(timer);
         return;
       }
@@ -96,8 +96,9 @@
     email: 'Please enter an email address we can reply to.',
     emailFormat: 'That email address doesn’t look right.',
     phone: 'Please enter a phone number.',
-    'show-date': 'Please choose which show you want a table at.',
+    'show-date': 'Please choose which show you\u2019re signing up for.',
     tables: 'Please choose how many tables you need.',
+    sells: 'Please tell us what you sell \u2014 it helps us lay out the room.',
     agree: 'Please confirm you’ve read the vendor rules.'
   };
 
@@ -176,8 +177,9 @@
         e.preventDefault();
         showStatus(
           status,
-          'Online reservations aren’t switched on yet. Please email info@i80cardshow.com ' +
-          'with your name, phone number, show date and table count and we’ll get you booked.',
+          'Online sign-ups aren’t switched on yet. Please email info@i80cardshow.com ' +
+          'with your name, phone number, how many tables you need and what you sell, ' +
+          'and we’ll get you on the vendor list.',
           false
         );
         return;
@@ -197,7 +199,7 @@
           form.reset();
           showStatus(
             status,
-            'Thanks! Your table request is in. We’ll confirm availability and send payment details within two business days.',
+            'Thanks — you’re on the vendor list. We’ll confirm your table and send payment details within two business days.',
             true
           );
         }).catch(function () {
@@ -207,7 +209,7 @@
             false
           );
         }).then(function () {
-          if (submit) { submit.disabled = false; submit.textContent = 'Send reservation request'; }
+          if (submit) { submit.disabled = false; submit.textContent = 'Send my sign-up'; }
         });
         return;
       }

@@ -12,7 +12,7 @@ push it, and it's live.
 | Path | What it is |
 | --- | --- |
 | `index.html` | The whole homepage: hero, next show, show info, schedule, dates, venue, table pricing, FAQ |
-| `vendors.html` | Table pricing, vendor rules, and the table reservation form |
+| `vendors.html` | Vendor sign-up page: table rate, the sign-up form, and vendor rules |
 | `thanks.html` | Confirmation page after a form submission (used by Netlify Forms) |
 | `404.html` | Page-not-found page |
 | `assets/css/styles.css` | All styling. Colors live in the `:root` block at the top |
@@ -28,33 +28,43 @@ push it, and it's live.
 Everything below is placeholder content. Search the HTML files for `TODO(` to find each spot
 in context.
 
-- [ ] **Venue name and address** — `index.html`, the "Venue & directions" section and the
-      structured-data block at the bottom of the file. Currently "I-80 Event Center,
-      1234 Interstate Drive, Your City, NE 68000".
-- [ ] **Google Map** — replace the `<iframe src="...">` in the venue section. In Google Maps:
-      find the venue → Share → Embed a map → copy the `src` value. Also update the
-      "Open in Google Maps" button link just above it.
+- [ ] **Venue** — the site currently says "details coming soon" everywhere. When the hall is
+      booked, replace the `.soon` panel in the "Venue & directions" section of `index.html`
+      with the name, address, parking notes and a Google Maps embed (Maps → Share →
+      Embed a map → copy the `src`). Also fill in the `location` block in the
+      structured data at the bottom of the file, and put the venue back into the
+      next-show strip and the show-date rows.
 - [ ] **Show dates** — three places, and they need to agree:
       1. The `<time datetime="2026-11-14T09:00">` in the next-show strip (this drives the countdown)
       2. The list in the "Upcoming show dates" section
       3. The dropdown options in the vendor form (`vendors.html`)
       Also update the date mentioned in the closing "See you at the next show" band.
-- [ ] **Admission and table prices** — the fact bar and pricing cards on `index.html`,
-      and the pricing cards plus form dropdown on `vendors.html`.
+- [ ] **Confirm the numbers** — currently $10 admission (kids 10 and under free),
+      50+ tables, $200 per 8' table. They appear in the fact bar, FAQ and rate card on
+      `index.html`, and in the rate card, page intro and table dropdown on `vendors.html`.
+      The dropdown lists multiples of $200 — change it if you offer a multi-table discount.
 - [ ] **Email address** — currently `info@i80cardshow.com`, used in the footer, the FAQ,
       the vendor page and the form's fallback message (`assets/js/main.js`).
 - [ ] **Phone number** — currently `(555) 000-0000` in the footer and on the vendor page.
 - [ ] **Social links** — Facebook, Instagram and TikTok in the footer of every page.
       Delete any you don't use.
-- [ ] **Connect the reservation form** — see below. Until you do, the form tells visitors
-      to email instead, so nothing gets lost.
+- [ ] **Connect the vendor sign-up form** — see below. Until you do, the form tells
+      visitors to email instead, so nothing gets lost.
 
 ---
 
-## Connecting the vendor reservation form
+## The vendor sign-up form
 
-The form at `vendors.html#reserve` validates itself in the browser but needs somewhere to
-send submissions. Pick one:
+`vendors.html` is the vendor sign-up page. The form asks for: name, business/table name,
+email, phone, **how many tables**, which show, **what they sell**, whether they're a
+returning dealer, shop website or social, whether they need power, whether to keep them on
+the vendor mailing list, free-text notes, and agreement to the rules.
+
+To add a question, copy any `.field` block in the form and give it a new `id`/`name`. If it
+should be required, add `required` to the input and a matching message in the `MESSAGES`
+object in `assets/js/main.js`.
+
+It validates itself in the browser but needs somewhere to send submissions. Pick one:
 
 ### Option A — Formspree (works on any host)
 
@@ -110,6 +120,8 @@ repository root. If you use Netlify, delete `CNAME` and set the domain in the Ne
 - **Adding an FAQ** — copy any `<details>` block in the FAQ section and edit the text.
 - **Adding a show date** — copy a `.date-row` block. Move the `date-row--next` class and the
   "Next show" tag to whichever show is coming up next.
+- **"Coming soon" panels** — the dashed `.soon` block is reusable anywhere details aren't
+  locked in yet. Swap it out for real content when you have it.
 - **The countdown** — reads the `datetime` attribute on `#next-show-date` and nothing else.
   Update that one attribute and the clock follows.
 - **The logo** — `assets/img/logo-original.png` is the untouched file. The `logo*.png` /
