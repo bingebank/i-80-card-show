@@ -297,8 +297,12 @@
 
       <!-- ==================================================================
            TODO(setup): create a second free form at formspree.io for these
-           announcement sign-ups and paste its endpoint into the action below.
-           Until then the form tells visitors to email or follow instead.
+           announcement sign-ups, then run:
+
+               node tools/set-form-endpoints.mjs --notify <your-form-id>
+
+           or paste its endpoint into the action below by hand. Until then the
+           form tells visitors to email or follow instead.
            ================================================================== -->
       <form class="form form--inline"
             id="notify-form"

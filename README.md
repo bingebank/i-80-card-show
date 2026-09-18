@@ -19,6 +19,7 @@ push it, and it's live.
 | `assets/css/styles.css` | All styling. Colors live in the `:root` block at the top |
 | `assets/js/main.js` | Mobile menu, countdown clock, form validation |
 | `assets/img/` | Logo, favicons, social share image |
+| `tools/set-form-endpoints.mjs` | Wires the Formspree endpoints into both forms |
 | `_headers` | Cloudflare Pages: caching and security headers |
 | `_redirects` | Cloudflare Pages: the `/ig` short link to Instagram |
 | `sitemap.xml`, `robots.txt` | Search engine basics |
@@ -58,8 +59,9 @@ in context.
 - [ ] **More social links** — Instagram (`@i80card_show`) is wired up across the site.
       The Facebook and TikTok placeholders were removed rather than left pointing at dead
       links; send me the URLs (or copy the Instagram `<a>` block in the footer) to add them.
-- [ ] **Connect the vendor sign-up form** — see below. Until you do, the form tells
-      visitors to email instead, so nothing gets lost.
+- [ ] **Connect both forms to Formspree** — the vendor sign-up and the date-announcement
+      capture. See "The vendor sign-up form" below; it's two IDs and one command. Until
+      then both forms tell visitors to email instead, so nothing gets lost.
 
 ---
 
@@ -85,33 +87,61 @@ To add a question, copy any `.field` block in the form and give it a new `id`/`n
 should be required, add `required` to the input and a matching message in the `MESSAGES`
 object in `assets/js/main.js`.
 
-It validates itself in the browser but needs somewhere to send submissions:
+Both forms validate in the browser already. What they need is somewhere to send
+submissions — that's Formspree, and it's two IDs.
 
-There are **two** forms to connect — the vendor sign-up and the date-announcement capture
-on the homepage. Formspree's free tier allows multiple forms, so make one for each and you
-can tell the two lists apart.
+### Create the two forms
 
-1. Create a free form at [formspree.io](https://formspree.io) and copy its endpoint.
-2. In `vendors.html`, paste it into the form's action:
-   ```html
-   <form class="form" id="vendor-form" method="POST"
-         action="https://formspree.io/f/YOUR_FORM_ID" novalidate>
-   ```
+1. Sign up at [formspree.io](https://formspree.io) with `bingebank@gmail.com` (switch it to
+   `info@i80cardshow.com` once that mailbox exists — Formspree emails submissions to
+   whatever address is on the account).
+2. **New Form** → name it `I-80 Vendor Sign-Up` → create.
+3. **New Form** again → name it `I-80 Date Announcements` → create.
+4. Each form's page shows an endpoint like `https://formspree.io/f/xdkolqwz`. The part
+   after `/f/` is the form ID. Copy both.
+5. Confirm the address Formspree emails you — it won't deliver until you click that link.
 
-That's it. Sign-ups land in whatever inbox you registered with Formspree — point it at
-`info@i80cardshow.com` once Email Routing is live. `main.js` posts the form in the
-background, so the visitor stays on the page and gets a confirmation message instead of
-being bounced to another screen.
+### Wire them in
 
-The free tier covers 50 submissions a month, which is plenty for a vendor list; their paid
-tier is cheap if a show blows past it.
+From the repo, one command:
 
-Then do the same for the `#notify-form` in `index.html` with a second Formspree endpoint —
-that one collects the "email me the date" sign-ups.
+```bash
+node tools/set-form-endpoints.mjs --vendor <vendor-id> --notify <announcement-id>
+```
 
-The hidden `_gotcha` field is a spam trap — leave it alone. Real visitors never see it, and
-Formspree drops any submission that fills it in. The hidden `source` field tags each
-submission with where it came from, so you can see which part of the funnel is working.
+It takes the bare ID or the whole URL, patches both files, and prints what it changed. Run
+it again any time to swap IDs, or pass `none` to clear one back to the "email us instead"
+fallback.
+
+Prefer doing it by hand? Set the `action` attribute on `<form id="vendor-form">` in
+`vendors.html` and `<form id="notify-form">` in `index.html`:
+
+```html
+<form class="form" id="vendor-form" method="POST"
+      action="https://formspree.io/f/YOUR_FORM_ID" ...>
+```
+
+Then commit and push — Cloudflare Pages redeploys on its own.
+
+### Test it before you advertise it
+
+Submit each form once on the live site and confirm the email arrives. The first submission
+to a new Formspree form triggers a confirmation email — click it, or nothing else gets
+through.
+
+### Worth knowing
+
+- **The free tier is 50 submissions a month, account-wide** — both forms share that pool.
+  Fine for a vendor list; if an announcement goes viral you'll hit it. Formspree emails you
+  at the cap, and their paid tier is cheap if that day comes.
+- `main.js` posts the form in the background, so the visitor stays on the page and gets a
+  confirmation message instead of being bounced to another screen.
+- The hidden `_gotcha` field is a spam trap — leave it alone. Real visitors never see it,
+  and Formspree drops any submission that fills it in.
+- The hidden `source` field tags each submission (`homepage-dates`, `vendor-page`) so you
+  can tell which part of the funnel produced it.
+- Until an endpoint is set, each form tells the visitor to email instead — nothing silently
+  disappears.
 
 ---
 

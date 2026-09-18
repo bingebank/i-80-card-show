@@ -134,8 +134,11 @@
       <!-- ==================================================================
            TODO(setup): connect this form before launch.
 
-           Create a free form at formspree.io, then paste its endpoint into
-           the action below:
+           Create a free form at formspree.io, then either run:
+
+               node tools/set-form-endpoints.mjs --vendor <your-form-id>
+
+           or paste the endpoint into the action below by hand:
 
                action="https://formspree.io/f/YOUR_FORM_ID"
 
