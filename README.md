@@ -1,6 +1,7 @@
 # www.i80cardshow.com
 
-The website for the **I-80 Card Show** — a Pokémon & TCG card show right off Interstate 80.
+The website for the **I-80 Card Show** — a Sacramento-area Pokémon & TCG card show right off
+Interstate 80.
 
 Plain HTML, CSS and JavaScript. No build step, no dependencies, no framework. Edit a file,
 push it, and it's live.
@@ -35,7 +36,9 @@ in context.
       structured data at the bottom of the file, and put the venue back into the
       next-show strip and the show-date rows.
 - [ ] **Show dates** — three places, and they need to agree:
-      1. The `<time datetime="2026-11-14T09:00">` in the next-show strip (this drives the countdown)
+      1. The `<time datetime="2026-11-14T09:00-08:00">` in the next-show strip (this drives
+         the countdown). Keep the Pacific offset: `-08:00` in winter, `-07:00` during
+         daylight saving, so the clock is right for out-of-town visitors.
       2. The list in the "Upcoming show dates" section
       3. The dropdown options in the vendor form (`vendors.html`)
       Also update the date mentioned in the closing "See you at the next show" band.
@@ -68,8 +71,9 @@ sales tax ID / seller's permit, table placement request, power needed, door-priz
 **Last couple of things** — returning dealer, how they heard about the show, free-text
 notes, vendor mailing list opt-in, and agreement to the rules*.
 
-Fields marked * are required. The sales tax ID is optional — if your state wants a permit on
-file before setup, add `required` to that input and a `taxid` message in `assets/js/main.js`.
+Fields marked * are required — including the CA seller's permit number, since California
+requires special-event operators to keep one on file for every seller (CDTFA). If you'd
+rather collect it later, drop `required` from that input in `vendors.html`.
 
 To add a question, copy any `.field` block in the form and give it a new `id`/`name`. If it
 should be required, add `required` to the input and a matching message in the `MESSAGES`

@@ -99,6 +99,7 @@
     city: 'Please tell us what city and state you’re coming from.',
     'show-date': 'Please choose which show you\u2019re signing up for.',
     tables: 'Please choose how many tables you need.',
+    taxid: 'California requires a seller’s permit number — enter “applying” if you don’t have one yet.',
     sells: 'Please tell us what you sell \u2014 it helps us lay out the room.',
     agree: 'Please confirm you’ve read the vendor rules.'
   };
