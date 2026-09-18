@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I-80 Card Show | Pokémon &amp; TCG Card Show</title>
+<meta name="description" content="The I-80 Card Show is a Pokémon and TCG card show with 100+ tables of singles, sealed product, graded slabs and vintage — right off Interstate 80. Free parking, all ages welcome.">
+<link rel="canonical" href="https://www.i80cardshow.com/">
+
+<!-- Social sharing -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="I-80 Card Show">
+<meta property="og:title" content="I-80 Card Show | Pokémon &amp; TCG Card Show">
+<meta property="og:description" content="100+ tables of Pokémon, TCG and sports cards right off Interstate 80. Singles, sealed, slabs and vintage. Free parking, all ages welcome.">
+<meta property="og:url" content="https://www.i80cardshow.com/">
+<meta property="og:image" content="https://www.i80cardshow.com/assets/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#070b1c">
+
+<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32">
+<link rel="icon" href="assets/img/favicon-512.png" sizes="512x512">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="/">
+      <picture>
+        <source srcset="assets/img/logo-small.webp" type="image/webp">
+        <img class="brand__mark" src="assets/img/logo-small.png" alt="I-80 Card Show" width="50" height="50">
+      </picture>
+      <span>
+        <span class="brand__name">I-80 Card Show</span>
+        <span class="brand__sub">Pokémon &amp; TCG</span>
+      </span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+
+    <nav class="nav" id="primary-nav" aria-label="Primary">
+      <a href="#show">The Show</a>
+      <a href="#dates">Dates</a>
+      <a href="#venue">Venue</a>
+      <a href="vendors.html">Vendors</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn--primary" href="vendors.html#reserve">Reserve a table</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ====================== HERO ====================== -->
+  <section class="hero">
+    <div class="wrap hero__inner">
+      <div>
+        <span class="eyebrow">Pokémon &amp; TCG · Right off I-80</span>
+        <h1>
+          I-80 Card Show
+          <span class="hero__line2">Rip. Trade. Collect.</span>
+        </h1>
+        <p class="hero__lede">
+          One hall, 100+ tables, and dealers hauling everything from Base Set
+          Charizards to this week's releases. Pokémon, One Piece, Magic, Yu-Gi-Oh,
+          Lorcana and sports — singles, sealed, slabs and bulk bins all day long.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#dates">See show dates</a>
+          <a class="btn btn--ghost" href="vendors.html#reserve">Become a vendor</a>
+        </div>
+        <p class="hero__note">Cash is king — most dealers also take Venmo, Zelle, PayPal and cards.</p>
+      </div>
+
+      <div class="hero__badge">
+        <picture>
+          <source srcset="assets/img/logo.webp" type="image/webp">
+          <img class="hero__logo" src="assets/img/logo.png" alt="I-80 Card Show — Pokémon and TCG card show" width="420" height="420" fetchpriority="high">
+        </picture>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== NEXT SHOW STRIP ====================== -->
+  <section class="showstrip" aria-label="Next show">
+    <div class="wrap showstrip__inner">
+      <div class="showstrip__when">
+        <span class="showstrip__label">Next show</span>
+        <!-- TODO(content): update this date for every show. The countdown reads the
+             datetime attribute, so format it as YYYY-MM-DDTHH:MM in 24-hour local time. -->
+        <p class="showstrip__date">
+          <time id="next-show-date" datetime="2026-11-14T09:00">Sat, November 14, 2026</time>
+        </p>
+        <p class="showstrip__meta">9:00 AM – 3:00 PM · I-80 Event Center · Exit 440</p>
+      </div>
+
+      <div class="countdown" id="countdown" aria-live="polite">
+        <div class="countdown__unit"><span class="countdown__num" data-unit="days">--</span><span class="countdown__label">Days</span></div>
+        <div class="countdown__unit"><span class="countdown__num" data-unit="hours">--</span><span class="countdown__label">Hours</span></div>
+        <div class="countdown__unit"><span class="countdown__num" data-unit="minutes">--</span><span class="countdown__label">Min</span></div>
+        <div class="countdown__unit"><span class="countdown__num" data-unit="seconds">--</span><span class="countdown__label">Sec</span></div>
+      </div>
+
+      <a class="btn btn--red showstrip__cta" href="#venue">Get directions</a>
+    </div>
+  </section>
+
+  <!-- ====================== FACT BAR ====================== -->
+  <section class="factbar" aria-label="Show at a glance">
+    <div class="wrap">
+      <div class="factbar__grid">
+        <div class="fact">
+          <span class="fact__label">Admission</span>
+          <p class="fact__value">$5<small>Kids 12 &amp; under free</small></p>
+        </div>
+        <div class="fact">
+          <span class="fact__label">Early buyers</span>
+          <p class="fact__value">$20<small>In at 8:00 AM</small></p>
+        </div>
+        <div class="fact">
+          <span class="fact__label">Tables</span>
+          <p class="fact__value">100+<small>Dealers from 6 states</small></p>
+        </div>
+        <div class="fact">
+          <span class="fact__label">Parking</span>
+          <p class="fact__value">Free<small>500+ spaces on site</small></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== THE SHOW ====================== -->
+  <section class="section" id="show">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="kicker">What you'll find</span>
+        <h2>A real card show, not a flea market</h2>
+        <p class="section__lede">
+          Every table is stocked with cards and collectibles — no candles, no kitchen
+          gadgets. Bring your want list, bring your trade binder, and plan on staying a while.
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">⚡</div>
+          <h3>Pokémon, vintage to modern</h3>
+          <p>WOTC-era Base Set, Jungle and Fossil through the newest Scarlet &amp; Violet drops. Japanese sets, promos, trainer gallery hits and full binders of singles.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">🃏</div>
+          <h3>Every other TCG</h3>
+          <p>One Piece, Magic: The Gathering, Yu-Gi-Oh!, Lorcana, Dragon Ball and more. If people collect it, somebody in the room is selling it.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">📦</div>
+          <h3>Sealed product</h3>
+          <p>Booster boxes, ETBs, collection boxes, tins and loose packs — vintage sealed through current retail, priced by people who actually know the market.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">🛡️</div>
+          <h3>Graded slabs</h3>
+          <p>PSA, CGC, BGS and TAG slabs across every era, plus raw cards worth sending in. Bring your own and get real offers on them.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">🏈</div>
+          <h3>Sports cards too</h3>
+          <p>A solid block of sports dealers every show — baseball, football, basketball and hockey, vintage through today's rookies.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">💵</div>
+          <h3>Dollar bins &amp; dig boxes</h3>
+          <p>Dozens of tables run quarter, dollar and dig boxes. The best way to build a set, fill a binder, or hook a kid on the hobby for five bucks.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">🔎</div>
+          <h3>Grading drop-off</h3>
+          <p>On-site submission table at most shows — hand your cards over in person and skip the shipping headache.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">🤝</div>
+          <h3>Trading welcome</h3>
+          <p>Trades happen across every table, and there's open table space up front for collectors who just want to swap.</p>
+        </article>
+        <article class="card">
+          <div class="card__icon" aria-hidden="true">🎟️</div>
+          <h3>Door prizes</h3>
+          <p>Free raffle with every paid admission — packs, slabs and sealed product. Drawings run all day and you don't need to be present to win.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== SHOW DAY SCHEDULE ====================== -->
+  <section class="section section--tint">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="kicker">Show day</span>
+        <h2>How the day runs</h2>
+      </div>
+
+      <ol class="schedule">
+        <li>
+          <div class="schedule__time">7:00 – 8:00 AM</div>
+          <div class="schedule__what"><strong>Dealer setup</strong><span>Doors open for reserved vendors. Load-in through the north dock.</span></div>
+        </li>
+        <li>
+          <div class="schedule__time">8:00 AM</div>
+          <div class="schedule__what"><strong>Early buyer entry</strong><span>$20 at the door. First crack at every table before the crowd.</span></div>
+        </li>
+        <li>
+          <div class="schedule__time">9:00 AM</div>
+          <div class="schedule__what"><strong>General admission opens</strong><span>$5 at the door, kids 12 and under free with an adult.</span></div>
+        </li>
+        <li>
+          <div class="schedule__time">12:00 PM</div>
+          <div class="schedule__what"><strong>Raffle drawings begin</strong><span>Winners posted at the front table and announced hourly.</span></div>
+        </li>
+        <li>
+          <div class="schedule__time">3:00 PM</div>
+          <div class="schedule__what"><strong>Show closes</strong><span>Vendors tear down until 4:30 PM. No early breakdown, please.</span></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ====================== DATES ====================== -->
+  <section class="section" id="dates">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="kicker">2026 – 2027 season</span>
+        <h2>Upcoming show dates</h2>
+        <p class="section__lede">
+          We run four shows a year. Mark your calendar — dates are locked in well ahead
+          of time, and we announce guests and special features as they're confirmed.
+        </p>
+      </div>
+
+      <!-- TODO(content): update this list each season. Add class "date-row--next"
+           to whichever row is the next upcoming show. -->
+      <div class="dates">
+        <div class="date-row date-row--next">
+          <div class="date-row__date">Sat, Nov 14, 2026</div>
+          <div class="date-row__meta">9:00 AM – 3:00 PM · I-80 Event Center · Fall show</div>
+          <span class="tag">Next show</span>
+        </div>
+        <div class="date-row">
+          <div class="date-row__date">Sat, Feb 13, 2027</div>
+          <div class="date-row__meta">9:00 AM – 3:00 PM · I-80 Event Center · Winter show</div>
+          <span class="tag tag--muted">Tables open</span>
+        </div>
+        <div class="date-row">
+          <div class="date-row__date">Sat, May 15, 2027</div>
+          <div class="date-row__meta">9:00 AM – 3:00 PM · I-80 Event Center · Spring show</div>
+          <span class="tag tag--muted">Tables open</span>
+        </div>
+        <div class="date-row">
+          <div class="date-row__date">Sat, Aug 14, 2027</div>
+          <div class="date-row__meta">9:00 AM – 3:00 PM · I-80 Event Center · Summer show</div>
+          <span class="tag tag--muted">Tables open</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== VENUE ====================== -->
+  <section class="section section--tint" id="venue">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="kicker">Getting here</span>
+        <h2>Venue &amp; directions</h2>
+      </div>
+
+      <div class="venue">
+        <div>
+          <h3>I-80 Event Center</h3>
+          <!-- TODO(content): replace with the real venue name and street address. -->
+          <address class="venue__address">
+            1234 Interstate Drive<br>
+            Your City, NE 68000
+          </address>
+
+          <ul class="venue__list">
+            <li>Two minutes from I-80, Exit 440 — south on Interstate Drive</li>
+            <li>Free parking, 500+ spaces, with RV and trailer room at the back lot</li>
+            <li>Single-level hall, fully accessible, wide aisles for wheelchairs and strollers</li>
+            <li>Concessions on site: hot food, coffee and cold drinks all day</li>
+            <li>Hotels and restaurants within a mile of the exit</li>
+          </ul>
+
+          <!-- TODO(content): point this at the venue's real Google Maps listing. -->
+          <a class="btn btn--dark" href="https://www.google.com/maps/search/?api=1&query=1234+Interstate+Drive" target="_blank" rel="noopener">Open in Google Maps</a>
+        </div>
+
+        <!-- TODO(content): replace the src below with the venue's Google Maps
+             embed URL (Maps → Share → Embed a map → copy the src). -->
+        <div class="map-embed">
+          <iframe
+            title="Map to the I-80 Card Show venue"
+            src="https://www.google.com/maps?q=Interstate+80+Nebraska&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== VENDORS TEASER ====================== -->
+  <section class="section" id="vendors">
+    <div class="wrap">
+      <div class="section__head section__head--center">
+        <span class="kicker">For dealers</span>
+        <h2>Set up with us</h2>
+        <p class="section__lede">
+          Eight-foot tables, an 8:00 AM early-buyer crowd, and a promoter who actually
+          promotes. Tables sell out — reserve early and lock in your spot.
+        </p>
+      </div>
+
+      <!-- TODO(content): update pricing to match your show. -->
+      <div class="price-grid">
+        <div class="price">
+          <h3 class="price__name">Single table</h3>
+          <p class="price__amount">$75</p>
+          <p class="price__per">per 8' table, per show</p>
+          <ul class="price__features">
+            <li>One 8' table with cover</li>
+            <li>Two chairs</li>
+            <li>Two dealer admissions</li>
+            <li>7:00 AM setup access</li>
+          </ul>
+          <a class="btn btn--dark btn--wide" href="vendors.html#reserve">Reserve</a>
+        </div>
+
+        <div class="price price--featured">
+          <h3 class="price__name">Three tables</h3>
+          <p class="price__amount">$195</p>
+          <p class="price__per">three 8' tables, per show</p>
+          <ul class="price__features">
+            <li>Three 8' tables in a row</li>
+            <li>Four chairs</li>
+            <li>Four dealer admissions</li>
+            <li>7:00 AM setup access</li>
+            <li>Listed on our vendor page</li>
+          </ul>
+          <a class="btn btn--primary btn--wide" href="vendors.html#reserve">Reserve</a>
+        </div>
+
+        <div class="price">
+          <h3 class="price__name">Season deal</h3>
+          <p class="price__amount">$240</p>
+          <p class="price__per">one table, all four shows</p>
+          <ul class="price__features">
+            <li>Same table at every 2027 show</li>
+            <li>Two dealer admissions per show</li>
+            <li>First pick of location</li>
+            <li>Listed on our vendor page</li>
+          </ul>
+          <a class="btn btn--dark btn--wide" href="vendors.html#reserve">Reserve</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== FAQ ====================== -->
+  <section class="section section--tint" id="faq">
+    <div class="wrap">
+      <div class="section__head section__head--center">
+        <span class="kicker">Good to know</span>
+        <h2>Frequently asked questions</h2>
+      </div>
+
+      <div class="faq">
+        <details open>
+          <summary>How much is admission?</summary>
+          <div class="faq__answer">General admission is $5 at the door starting at 9:00 AM. Early buyer admission is $20 and gets you in at 8:00 AM. Kids 12 and under are free with a paying adult.</div>
+        </details>
+        <details>
+          <summary>Do I need a ticket in advance?</summary>
+          <div class="faq__answer">No. Admission is cash or card at the door — there's no advance ticket to buy and no line to worry about.</div>
+        </details>
+        <details>
+          <summary>Is this just Pokémon, or other cards too?</summary>
+          <div class="faq__answer">Pokémon is the biggest section of the room, but you'll also find One Piece, Magic, Yu-Gi-Oh!, Lorcana and a full block of sports card dealers. Vendors list what they sell when they book, and we spread the room out so it's easy to shop.</div>
+        </details>
+        <details>
+          <summary>Can I sell or trade if I'm not a vendor?</summary>
+          <div class="faq__answer">Absolutely. Plenty of dealers buy collections on site, and trading across the table is half the fun. If you want to sell in volume, though, grab a table — it usually pays for itself.</div>
+        </details>
+        <details>
+          <summary>Are fake and proxy cards allowed?</summary>
+          <div class="faq__answer">No. Counterfeit, proxy and altered cards are not allowed at any table, period. If you're ever unsure about something you bought at the show, bring it to the front table and we'll help you sort it out.</div>
+        </details>
+        <details>
+          <summary>Is there an ATM?</summary>
+          <div class="faq__answer">There's an ATM on site, but we'd bring cash anyway. Most dealers also take Venmo, Zelle, PayPal or cards.</div>
+        </details>
+        <details>
+          <summary>Are kids welcome?</summary>
+          <div class="faq__answer">Very. Kids 12 and under get in free, plenty of tables run dollar bins, and several dealers hand out free cards to young collectors.</div>
+        </details>
+        <details>
+          <summary>Can I get cards graded at the show?</summary>
+          <div class="faq__answer">Most shows have an on-site grading submission table. We announce which grading company is attending on our social pages before each show.</div>
+        </details>
+        <details>
+          <summary>How do I reserve a table?</summary>
+          <div class="faq__answer">Fill out the <a href="vendors.html#reserve">vendor reservation form</a> and we'll confirm availability and send payment details within two business days. Tables are not held until payment is received.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== CTA ====================== -->
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>See you at the next show</h2>
+      <p>Saturday, November 14, 2026 · 9:00 AM – 3:00 PM · I-80 Event Center. Bring cash, bring your want list, bring your binder.</p>
+      <div class="cta-band__actions">
+        <a class="btn btn--primary" href="vendors.html#reserve">Reserve a table</a>
+        <a class="btn btn--ghost" href="#contact">Contact the show</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <span class="footer__brand">
+          <picture>
+            <source srcset="assets/img/logo-small.webp" type="image/webp">
+            <img src="assets/img/logo-small.png" alt="" width="54" height="54" loading="lazy">
+          </picture>
+          <span>I-80 Card Show</span>
+        </span>
+        <p>Pokémon, TCG and sports cards — right off Interstate 80. Four shows a year, 100+ tables, all ages welcome.</p>
+        <!-- TODO(content): replace with your real social URLs, or delete the links you don't use. -->
+        <div class="social">
+          <a href="https://facebook.com/" target="_blank" rel="noopener" aria-label="I-80 Card Show on Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12Z"/></svg>
+          </a>
+          <a href="https://instagram.com/" target="_blank" rel="noopener" aria-label="I-80 Card Show on Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c0 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2 0-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2-.1-1.3-.1-1.7-.1-4.9s0-3.6.1-4.9c0-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4 1.3-.1 1.7-.1 4.9-.1Zm0 3.8a6 6 0 1 0 0 12 6 6 0 0 0 0-12Zm0 9.9a3.9 3.9 0 1 1 0-7.8 3.9 3.9 0 0 1 0 7.8Zm7.6-10.1a1.4 1.4 0 1 1-2.8 0 1.4 1.4 0 0 1 2.8 0Z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/" target="_blank" rel="noopener" aria-label="I-80 Card Show on TikTok">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 5.8a4.8 4.8 0 0 1-1.2-3.1h-3v12.3a2.5 2.5 0 1 1-1.8-2.4V9.5a5.6 5.6 0 1 0 4.8 5.5V9.4a7.7 7.7 0 0 0 4.5 1.4V7.8a4.7 4.7 0 0 1-3.3-2Z"/></svg>
+          </a>
+          <a href="mailto:info@i80cardshow.com" aria-label="Email the I-80 Card Show">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h17A1.5 1.5 0 0 1 22 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-17A1.5 1.5 0 0 1 2 18.5v-13Zm2.3.5 7.7 5.8L19.7 6H4.3Z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h3>The Show</h3>
+        <ul class="footer__links">
+          <li><a href="#show">What you'll find</a></li>
+          <li><a href="#dates">Show dates</a></li>
+          <li><a href="#venue">Venue &amp; directions</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Vendors</h3>
+        <ul class="footer__links">
+          <li><a href="vendors.html">Table pricing</a></li>
+          <li><a href="vendors.html#reserve">Reserve a table</a></li>
+          <li><a href="vendors.html#rules">Vendor rules</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3>Contact</h3>
+        <!-- TODO(content): replace with your real email and phone number. -->
+        <ul class="footer__links">
+          <li><a href="mailto:info@i80cardshow.com">info@i80cardshow.com</a></li>
+          <li><a href="tel:+15550000000">(555) 000-0000</a></li>
+          <li>Show line answered 9–5, Mon–Fri</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>&copy; <span id="year">2026</span> I-80 Card Show. All rights reserved.</span>
+      <span>www.i80cardshow.com</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+
+<!-- Structured data: helps the show appear in Google's event results.
+     TODO(content): keep the dates, venue and prices here in sync with the page. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "I-80 Card Show",
+  "description": "Pokémon and TCG card show with 100+ dealer tables — singles, sealed product, graded slabs, vintage and sports cards — right off Interstate 80.",
+  "startDate": "2026-11-14T09:00",
+  "endDate": "2026-11-14T15:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "url": "https://www.i80cardshow.com/",
+  "image": "https://www.i80cardshow.com/assets/img/og-image.jpg",
+  "location": {
+    "@type": "Place",
+    "name": "I-80 Event Center",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "1234 Interstate Drive",
+      "addressLocality": "Your City",
+      "addressRegion": "NE",
+      "postalCode": "68000",
+      "addressCountry": "US"
+    }
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "I-80 Card Show",
+    "url": "https://www.i80cardshow.com/",
+    "email": "info@i80cardshow.com"
+  },
+  "offers": {
+    "@type": "Offer",
+    "name": "General admission",
+    "price": "5",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "url": "https://www.i80cardshow.com/",
+    "validFrom": "2026-01-01T00:00"
+  }
+}
+</script>
+</body>
+</html>
