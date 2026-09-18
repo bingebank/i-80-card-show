@@ -8,6 +8,8 @@ push it, and it's live.
 
 ---
 
+**Going live?** [docs/GO-LIVE.md](docs/GO-LIVE.md) is the ordered checklist.
+
 ## Files
 
 | Path | What it is |
@@ -20,6 +22,7 @@ push it, and it's live.
 | `assets/js/main.js` | Mobile menu, countdown clock, form validation |
 | `assets/img/` | Logo, favicons, social share image |
 | `tools/set-form-endpoints.mjs` | Wires the Formspree endpoints into both forms |
+| `docs/GO-LIVE.md` | The launch checklist, in order |
 | `docs/MOVING-TO-CLOUDFLARE.md` | Click-by-click guide to the GoDaddy → Cloudflare switch |
 | `_headers` | Cloudflare Pages: caching and security headers |
 | `_redirects` | Cloudflare Pages: the `/ig` short link to Instagram |
