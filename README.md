@@ -20,6 +20,7 @@ push it, and it's live.
 | `assets/js/main.js` | Mobile menu, countdown clock, form validation |
 | `assets/img/` | Logo, favicons, social share image |
 | `tools/set-form-endpoints.mjs` | Wires the Formspree endpoints into both forms |
+| `docs/MOVING-TO-CLOUDFLARE.md` | Click-by-click guide to the GoDaddy → Cloudflare switch |
 | `_headers` | Cloudflare Pages: caching and security headers |
 | `_redirects` | Cloudflare Pages: the `/ig` short link to Instagram |
 | `sitemap.xml`, `robots.txt` | Search engine basics |
@@ -243,6 +244,9 @@ The site is a plain static folder: no build step, no dependencies. Cloudflare Pa
 straight from the repo.
 
 ### 1. Point the domain at Cloudflare
+
+> Want this bit spelled out click by click? See
+> [docs/MOVING-TO-CLOUDFLARE.md](docs/MOVING-TO-CLOUDFLARE.md).
 
 Cloudflare needs to run your DNS before Pages custom domains or Email Routing will work.
 You do **not** have to move the registration away from GoDaddy to do this.
