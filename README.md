@@ -46,8 +46,9 @@ in context.
       50+ tables, $200 per 8' table. They appear in the fact bar, FAQ and rate card on
       `index.html`, and in the rate card, page intro and table dropdown on `vendors.html`.
       The dropdown lists multiples of $200 — change it if you offer a multi-table discount.
-- [ ] **Email address** — currently `info@i80cardshow.com`, used in the footer, the FAQ,
-      the vendor page and the form's fallback message (`assets/js/main.js`).
+- [ ] **Email address** — the site already uses `info@i80cardshow.com` in the footer, the
+      FAQ, the vendor page and the form's fallback message (`assets/js/main.js`). Set the
+      mailbox up (see "Email at i80cardshow.com" below) and nothing on the site changes.
 - [ ] **Phone number** — currently `(555) 000-0000` in the footer and on the vendor page.
 - [ ] **More social links** — Instagram (`@i80card_show`) is wired up across the site.
       The Facebook and TikTok placeholders were removed rather than left pointing at dead
@@ -102,6 +103,74 @@ background and shows a confirmation message.
 
 Either way, the hidden `company-website` field is a spam trap — leave it alone. Real visitors
 never see it; bots that fill it in get filtered.
+
+---
+
+## Email at i80cardshow.com
+
+The site uses **info@i80cardshow.com** throughout (footer, FAQ, vendor page, and the form's
+fallback message). Set that mailbox up and the site needs no changes.
+
+Domain is registered at **GoDaddy**, so all records below go in
+GoDaddy → My Products → Domains → i80cardshow.com → **DNS → Manage Zones**.
+
+Email records (MX, TXT) are completely separate from the website records (A, CNAME) that
+point at GitHub Pages. Adding email will not affect the site.
+
+### Setting up Google Workspace
+
+1. Sign up at [workspace.google.com](https://workspace.google.com) and enter
+   `i80cardshow.com` as your domain. Business Starter is the cheapest plan that gives a
+   real mailbox — check current pricing, it's roughly $7–8 per user per month.
+2. **Verify the domain.** Google gives you a TXT record. In GoDaddy:
+   - Type `TXT`, Name `@`, Value `google-site-verification=...` (the string Google gives you)
+3. **Delete GoDaddy's default MX records.** GoDaddy pre-fills MX records pointing at
+   `secureserver.net`. If you leave them, mail breaks. Remove every existing MX record first.
+4. **Add Google's MX record:**
+
+   | Type | Name | Value | Priority | TTL |
+   | --- | --- | --- | --- | --- |
+   | MX | `@` | `smtp.google.com` | 1 | 1 hour |
+
+5. **Add SPF** so your mail doesn't land in spam:
+
+   | Type | Name | Value |
+   | --- | --- | --- |
+   | TXT | `@` | `v=spf1 include:_spf.google.com ~all` |
+
+   Only one SPF record per domain — if one already exists, merge them rather than adding a second.
+6. **Turn on DKIM.** In the Google Admin console: Apps → Google Workspace → Gmail →
+   Authenticate email → Generate new record. Add what it gives you:
+
+   | Type | Name | Value |
+   | --- | --- | --- |
+   | TXT | `google._domainkey` | the long `v=DKIM1; k=rsa; p=...` string |
+
+   Then come back to the admin console and click **Start authentication**.
+7. **Add DMARC** (start permissive, tighten later once mail is flowing):
+
+   | Type | Name | Value |
+   | --- | --- | --- |
+   | TXT | `_dmarc` | `v=DMARC1; p=none; rua=mailto:info@i80cardshow.com` |
+
+8. **Add aliases instead of paying for more mailboxes.** In Admin → Directory → Users → your
+   user → Add alternate email. `vendors@`, `hello@` and the like all land in the same inbox
+   at no extra cost.
+
+DNS changes usually take effect within an hour but can take up to 48. Test by emailing the
+address from an outside account, and check the result at
+[mail-tester.com](https://www.mail-tester.com) to confirm SPF/DKIM/DMARC all pass.
+
+### The cheaper alternatives
+
+- **Cloudflare Email Routing** — free, forwards `info@i80cardshow.com` to an existing Gmail.
+  Receiving only: replies come from your personal address unless you add a sending service.
+  Requires moving DNS from GoDaddy to Cloudflare (also free, and faster DNS).
+- **Zoho Mail free plan** — a real send-and-receive mailbox at your domain for $0, with the
+  same MX/SPF/DKIM steps as above but Zoho's values (`mx.zoho.com` priority 10,
+  `mx2.zoho.com` 20, `mx3.zoho.com` 50; SPF `v=spf1 include:zoho.com ~all`).
+- **GoDaddy's own Microsoft 365 email** — the least DNS work, since GoDaddy configures its
+  own zone automatically. Watch the renewal pricing.
 
 ---
 
