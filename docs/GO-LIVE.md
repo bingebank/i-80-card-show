@@ -35,8 +35,10 @@ Five minutes fixes it, for free.
 ### The steps
 
 1. Go to **dash.cloudflare.com** and sign in
-2. Click on **i80cardshow.com** in your list of websites
+2. **Click on i80cardshow.com in your list of websites.** This bit matters — see the
+   warning below.
 3. Down the left side there's a menu. Click **Email**
+   (it might be a collapsed heading — click it to open it)
 4. Click **Email Routing**
 5. Click the big **Get started** button
 6. Cloudflare says it needs to add some settings. Say **yes** / **Add records**.
@@ -53,6 +55,27 @@ Five minutes fixes it, for free.
 
 ✅ **You'll know it worked when:** you send an email from your phone to
 `info@i80cardshow.com` and it shows up in your Gmail.
+
+### ⚠️ "I don't see Email in the menu, only Security"
+
+You're one level too high. Cloudflare has two different left-hand menus:
+
+- **Account level** — where you land after logging in. Shows Workers & Pages, R2,
+  Zero Trust, and **Email Security**. That's a different, paid product. Not what you want.
+- **Domain level** — after you click on `i80cardshow.com`. This is where **Email Routing**
+  lives.
+
+Check your browser's address bar. It should have your domain in it, like
+`dash.cloudflare.com/<numbers>/i80cardshow.com`. No domain in the address bar means you're
+still at account level.
+
+**Shortcut that skips the hunting:** paste this into your address bar —
+
+```
+https://dash.cloudflare.com/?to=/:account/i80cardshow.com/email/routing
+```
+
+Cloudflare fills in the account part itself and takes you straight there.
 
 > **Heads up:** this catches mail, it doesn't send it. When you hit reply, it goes out from
 > your Gmail address. That's fine for now. We can upgrade it later.
