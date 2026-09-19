@@ -1,123 +1,196 @@
-# Going live
+# Putting the website on the internet
 
-DNS is on Cloudflare already. This is the rest, in the order that matters.
-
-Steps 1–3 get the site up and working. Step 4 can happen after launch.
-
----
-
-## Step 1 — Turn on email first (5 minutes)
-
-**Do this before the site is public.**
-
-Every contact path on the site says `info@i80cardshow.com`: the footer, the FAQ, the
-"Email the show" button, and the message both forms show while they're not wired up. Right
-now that address doesn't exist. Launch without it and every person who tries to reach you
-bounces.
-
-Cloudflare Email Routing fixes it in five minutes, free:
-
-1. Cloudflare dashboard → click `i80cardshow.com` → **Email** in the left menu →
-   **Email Routing** → **Get started**
-2. It offers to add the records it needs. **Accept.**
-3. Destination address: `bingebank@gmail.com`. Cloudflare emails you a verification link —
-   click it.
-4. Create the route: `info@i80cardshow.com` → `bingebank@gmail.com`
-5. Turn on **catch-all** too, so `vendors@`, `hello@` and every typo reach you.
-
-✅ Test it: email `info@i80cardshow.com` from your phone. It should land in Gmail.
-
-> This forwards mail but doesn't send it — replies go out from your Gmail address. That's
-> fine for launch. Zoho (a real mailbox that sends from your domain) can replace it later;
-> it's a DNS change, and the website doesn't care either way. **Don't run both** — they
-> both want the MX records.
+The plain-English version. Do the jobs in order. Each one has a "you'll know it worked
+when" so you're never guessing.
 
 ---
 
-## Step 2 — Put the site up
+## Where you are right now
 
-1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** →
-   **Connect to Git**
-2. Authorize GitHub if it asks, then pick the **i-80-card-show** repository
-3. Settings:
-   - **Production branch:** `claude/i80cardshow-website-ydrhh9`
-     *(the only branch that exists — pick it from the dropdown)*
-   - **Framework preset:** None
-   - **Build command:** leave empty
-   - **Build output directory:** `/`
-4. **Save and Deploy**
+Three things are already done:
 
-It takes about a minute. You get a URL like `i-80-card-show.pages.dev`.
+- ✅ The website is **built** and sitting in GitHub, finished and waiting
+- ✅ The domain name `i80cardshow.com` is **on Cloudflare** (I checked — it really is)
+- ✅ There's a copy of the site on a branch called **main**, ready to publish
 
-✅ **Open that URL.** The site should look exactly like the screenshots. Click around,
-try the forms, check it on your phone.
+Two things are left. Neither is hard.
 
-Every push to that branch redeploys automatically from here on.
+- ⬜ Make the email address work
+- ⬜ Switch the website on
+
+That's it. About fifteen minutes.
 
 ---
 
-## Step 3 — Put your domain on it
+# Job 1 — Make the email work
 
-1. In the Pages project → **Custom domains** → **Set up a custom domain**
-2. Enter `www.i80cardshow.com` → Cloudflare adds the DNS record itself → **Activate**
-3. Do it again for `i80cardshow.com` (no www)
-4. Now send the bare domain to the www one, so you don't have two copies of the site
-   competing in Google:
-   - Left menu → **Rules** → **Redirect Rules** → **Create rule**
-   - Name: `apex to www`
-   - If: **Hostname** **equals** `i80cardshow.com`
-   - Then: **Dynamic redirect**, status **301**
-   - Expression: `concat("https://www.i80cardshow.com", http.request.uri.path)`
-   - **Preserve query string:** on
-   - Deploy
+**Do this one first.**
 
-✅ **Open www.i80cardshow.com.** HTTPS should work on its own — Cloudflare issues the
-certificate. If it complains about the certificate for the first few minutes, that's
-normal; give it up to fifteen.
+Here's why. All over the website it says "email us at **info@i80cardshow.com**." That
+address doesn't exist yet. If you switch the site on before you do this, every single
+person who tries to contact you gets a bounce-back. You'd never even know they tried.
 
-**You are live.**
+Five minutes fixes it, for free.
 
----
+### The steps
 
-## Step 4 — Wire up the forms
+1. Go to **dash.cloudflare.com** and sign in
+2. Click on **i80cardshow.com** in your list of websites
+3. Down the left side there's a menu. Click **Email**
+4. Click **Email Routing**
+5. Click the big **Get started** button
+6. Cloudflare says it needs to add some settings. Say **yes** / **Add records**.
+   (It's just telling the internet where your mail should go.)
+7. It asks where you want your mail delivered. Type **bingebank@gmail.com**
+8. **Go check that Gmail inbox.** Cloudflare sent it a link. Click the link.
+   Nothing works until you do.
+9. Back in Cloudflare, make the rule:
+   - Address: **info@i80cardshow.com**
+   - Send it to: **bingebank@gmail.com**
+   - Save
+10. Look for a switch called **Catch-all address** and turn it **on**.
+    This means anything@i80cardshow.com reaches you — `vendors@`, `hello@`, typos, all of it.
 
-The site works without this — both forms tell people to email instead, and that email now
-works. But you're leaving sign-ups on the table, so don't wait long.
+✅ **You'll know it worked when:** you send an email from your phone to
+`info@i80cardshow.com` and it shows up in your Gmail.
 
-1. Sign up at [formspree.io](https://formspree.io) using `bingebank@gmail.com`
-2. **New Form** → `I-80 Vendor Sign-Up` → copy the ID from its endpoint
-   (`https://formspree.io/f/`**`xdkolqwz`**)
-3. **New Form** → `I-80 Date Announcements` → copy that ID too
-4. Click the confirmation email Formspree sends, or nothing gets delivered
-5. Either send both IDs over to be committed, or run it yourself:
-
-   ```bash
-   node tools/set-form-endpoints.mjs --vendor <vendor-id> --notify <announcement-id>
-   ```
-
-6. Commit and push. Cloudflare redeploys on its own.
-
-✅ Test it: submit each form on the live site and confirm the email arrives.
+> **Heads up:** this catches mail, it doesn't send it. When you hit reply, it goes out from
+> your Gmail address. That's fine for now. We can upgrade it later.
 
 ---
 
-## Step 5 — Two minutes of housekeeping
+# Job 2 — Switch the website on
 
-- **Turn on analytics.** Pages project → **Analytics** → enable Web Analytics. One toggle,
-  free, no cookie banner. Now you can see whether anyone's showing up.
-- **Post the link.** Put `www.i80cardshow.com` in the Instagram bio. That's your traffic
-  source until the show has a date.
-- **Tell Google it exists.** [Google Search Console](https://search.google.com/search-console)
-  → add `www.i80cardshow.com` → verify (Cloudflare makes this a couple of clicks) → submit
-  `https://www.i80cardshow.com/sitemap.xml`. Indexing takes days, so start it now.
+Cloudflare is going to look at your GitHub, take the website files, and put them on the
+internet. You don't have to upload anything.
+
+### The steps
+
+1. Still in **dash.cloudflare.com**
+2. Down the left side, click **Workers & Pages**
+3. Click **Create**
+4. Along the top there are tabs. Click the **Pages** tab
+5. Click **Connect to Git**
+6. It asks to connect to GitHub. Say yes. A GitHub window pops up — approve it.
+7. A list of your projects appears. Click **i-80-card-show**
+8. Click **Begin setup**
+9. Now a settings page. **Only four things matter:**
+
+   | It asks for | You put |
+   | --- | --- |
+   | Production branch | **main** ← pick it from the dropdown |
+   | Framework preset | **None** |
+   | Build command | **leave it empty** |
+   | Build output directory | **/** ← just a forward slash |
+
+   Ignore everything else on that page.
+
+10. Click **Save and Deploy**
+11. Wait about a minute. You'll see text scrolling — that's normal, let it finish.
+
+✅ **You'll know it worked when:** it gives you a link ending in **.pages.dev**.
+Click it. **Your website appears.**
+
+**Go look at it properly.** Click the buttons. Scroll to the bottom. Open it on your phone.
+This is the real site — it's just wearing a temporary address.
 
 ---
 
-## What to do the moment the venue is signed
+# Job 3 — Put your own name on it
 
-The site is built to absorb this in one pass — see
-[Adding the dates back](../README.md#adding-the-dates-back) in the README. The countdown,
-the season calendar and the Google event listing are all written and waiting on a date.
+Right now the site lives at that ugly `.pages.dev` address. Let's move it to
+`www.i80cardshow.com`.
 
-And email everyone who signed up through the announcement form. That's the whole reason
-it's there.
+### The steps
+
+1. You should still be looking at your new Pages project. If not:
+   **Workers & Pages** → click **i-80-card-show**
+2. Along the top, click the **Custom domains** tab
+3. Click **Set up a custom domain**
+4. Type: **www.i80cardshow.com**
+5. Click **Continue**, then **Activate domain**
+6. Cloudflare sorts out the technical bit by itself. Wait for it to say **Active**.
+7. **Do steps 3 to 5 again**, but this time type **i80cardshow.com** (no `www.`)
+
+✅ **You'll know it worked when:** you type **www.i80cardshow.com** into your phone and
+your website loads.
+
+> The little padlock (https) turns itself on. If your browser complains about security for
+> the first ten or fifteen minutes, that's normal — it sorts itself out. Get a coffee.
+
+**At this point you are live.** People can find you. You can put the link in your Instagram
+bio right now.
+
+---
+
+# Job 4 — The fiddly one (do it after coffee)
+
+This one's optional-ish, and it's the only genuinely annoying step. It makes
+`i80cardshow.com` send people to `www.i80cardshow.com`, so you don't end up with two copies
+of your website competing against each other on Google.
+
+**If this bit makes your eyes cross, stop and send me a screenshot — I'll talk you through
+it.** The site works fine without it.
+
+1. Go back to the main Cloudflare dashboard and click **i80cardshow.com**
+2. Left menu → **Rules** → **Redirect Rules**
+3. Click **Create rule**
+4. Fill it in:
+   - **Rule name:** `send bare domain to www`
+   - **When incoming requests match:** choose **Custom filter expression**
+   - Field: **Hostname** · Operator: **equals** · Value: `i80cardshow.com`
+   - **Then... Type:** choose **Dynamic**
+   - **Expression** — copy this exactly:
+     ```
+     concat("https://www.i80cardshow.com", http.request.uri.path)
+     ```
+   - **Status code:** `301`
+   - **Preserve query string:** turn it **on**
+5. Click **Deploy**
+
+✅ **You'll know it worked when:** you type `i80cardshow.com` (no www) and it jumps to
+`www.i80cardshow.com` by itself.
+
+---
+
+# Job 5 — Later this week, not today
+
+The two forms on the site (vendor sign-up, and "email me the date") aren't collecting yet.
+Anyone who uses them is told to email you instead — and now that email works, nothing gets
+lost. So this isn't urgent. But don't leave it a month.
+
+1. Go to **formspree.io** and sign up with **bingebank@gmail.com**
+2. Make a form called **I-80 Vendor Sign-Up**
+3. Make another one called **I-80 Date Announcements**
+4. Each one gives you a web address like `https://formspree.io/f/abcdwxyz`.
+   The last bit — `abcdwxyz` — is what I need.
+5. **Send me both of those codes** and I'll plug them in.
+
+---
+
+# If something goes wrong
+
+**The list of GitHub projects is empty.**
+Cloudflare probably didn't get permission to see it. There's usually a link saying
+**Add account** or **Configure GitHub** — click it and tick the `i-80-card-show` project.
+
+**The website loads but looks broken — no colours, no pictures.**
+The "Build output directory" setting is wrong. It must be exactly **/** — one forward
+slash, nothing else. You can fix it in **Settings → Builds & deployments** and redeploy.
+
+**You can't find a button I mentioned.**
+Cloudflare moves things around. Take a screenshot of what you're looking at and send it to
+me — I'll tell you where it went.
+
+**Something looks scary or you think you broke it.**
+You almost certainly didn't, and nothing here is permanent. Stop, screenshot it, send it
+over. Don't click things at random trying to fix it — that's how small problems become big
+ones.
+
+---
+
+# When you're done
+
+Send me the **.pages.dev** link and the real one. I can check both from outside your
+account — whether the pages load, whether the pictures arrive, whether the forms behave,
+whether it looks right on a phone. Better than us both guessing.
