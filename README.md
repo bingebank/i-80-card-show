@@ -8,7 +8,11 @@ push it, and it's live.
 
 ---
 
-**Going live?** [docs/GO-LIVE.md](docs/GO-LIVE.md) is the ordered checklist.
+**Live at [www.i80cardshow.com](https://www.i80cardshow.com)** — deployed as a Cloudflare
+Worker (static assets) from the `main` branch. Pushing to `main` redeploys automatically.
+
+See [docs/GO-LIVE.md](docs/GO-LIVE.md) for what's done, what's left, and the Cloudflare
+gotchas worth remembering.
 
 ## Files
 
@@ -24,8 +28,10 @@ push it, and it's live.
 | `tools/set-form-endpoints.mjs` | Wires the Formspree endpoints into both forms |
 | `docs/GO-LIVE.md` | The launch checklist, in order |
 | `docs/MOVING-TO-CLOUDFLARE.md` | Click-by-click guide to the GoDaddy → Cloudflare switch |
-| `_headers` | Cloudflare Pages: caching and security headers |
-| `_redirects` | Cloudflare Pages: the `/ig` short link to Instagram |
+| `wrangler.jsonc` | Tells Cloudflare this repo is a static site |
+| `.assetsignore` | Keeps docs and tooling out of what gets served |
+| `_headers` | Caching and security headers |
+| `_redirects` | The `/ig` short link to Instagram |
 | `sitemap.xml`, `robots.txt` | Search engine basics |
 
 ---
@@ -241,10 +247,14 @@ care either way.
 
 ---
 
-## Publishing — Cloudflare Pages
+## Publishing — Cloudflare Workers
 
-The site is a plain static folder: no build step, no dependencies. Cloudflare Pages serves it
-straight from the repo.
+The site is a plain static folder: no build step, no dependencies. It runs as an
+assets-only Cloudflare Worker, configured by `wrangler.jsonc` and deployed straight from
+this repo — Cloudflare's dashboard now routes new projects through the Workers flow rather
+than Pages. `_headers` and `_redirects` work the same either way.
+
+**This is already set up and live.** What follows is for reference or a rebuild.
 
 ### 1. Point the domain at Cloudflare
 

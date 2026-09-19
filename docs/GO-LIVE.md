@@ -5,24 +5,44 @@ when" so you're never guessing.
 
 ---
 
-## Where you are right now
+## Status: LIVE
 
-Three things are already done:
+**https://www.i80cardshow.com** — deployed and serving.
 
-- ✅ The website is **built** and sitting in GitHub, finished and waiting
-- ✅ The domain name `i80cardshow.com` is **on Cloudflare** (I checked — it really is)
-- ✅ There's a copy of the site on a branch called **main**, ready to publish
+- ✅ Domain on Cloudflare
+- ✅ Site deployed as a **Cloudflare Worker** (static assets) from the `main` branch
+- ✅ `www.i80cardshow.com` attached via a **Worker Route** (`www.i80cardshow.com/*`)
+- ⬜ Email — `info@i80cardshow.com` still has no MX records, so mail bounces
+- ⬜ The two forms — need Formspree endpoints
+- ⬜ `i80cardshow.com` without the `www` — route wouldn't save, cosmetic only
 
-Two things are left. Neither is hard.
+### How it actually got deployed
 
-- ⬜ Make the email address work
-- ⬜ Switch the website on
+Cloudflare's dashboard now pushes new projects through the **Workers** flow rather than
+Pages, so the site runs as an assets-only Worker configured by `wrangler.jsonc`. Workers
+static assets honours `_headers` and `_redirects` just like Pages does, so caching,
+security headers and the `/ig` short link all work as designed.
 
-That's it. About fifteen minutes.
+**Pushing to `main` redeploys automatically.**
+
+### Two traps worth remembering
+
+**"Add Domain" vs "Add Route".** Add Domain insists on creating its own DNS record and
+fails with *"Hostname already has externally managed DNS records"* when anything already
+exists on that name. **Add Route** uses the existing proxied record instead — that's what
+finally worked. Route pattern: `www.i80cardshow.com/*` (domain, slash, star).
+
+**The subdomain box is not the full domain.** Cloudflare appends the zone for you. Typing
+`www.i80cardshow.com` produces `www.i80cardshow.com.i80cardshow.com`. Type only `www`, or
+leave it empty for the root.
+
+**Browser cache after going live.** A redirect served during setup gets cached hard by
+browsers, which then show the old page without asking the network. Check in a private
+window before believing anything is broken.
 
 ---
 
-# Job 1 — Make the email work
+# Job 1 — Make the email work ⬜ STILL TO DO
 
 **Do this one first.**
 
@@ -82,7 +102,7 @@ Cloudflare fills in the account part itself and takes you straight there.
 
 ---
 
-# Job 2 — Switch the website on
+# Job 2 — Switch the website on ✅ DONE
 
 Cloudflare is going to look at your GitHub, take the website files, and put them on the
 internet. You don't have to upload anything.
@@ -119,7 +139,7 @@ This is the real site — it's just wearing a temporary address.
 
 ---
 
-# Job 3 — Put your own name on it
+# Job 3 — Put your own name on it ✅ DONE (www)
 
 Right now the site lives at that ugly `.pages.dev` address. Let's move it to
 `www.i80cardshow.com`.
@@ -176,7 +196,7 @@ it.** The site works fine without it.
 
 ---
 
-# Job 5 — Later this week, not today
+# Job 5 — The forms ⬜ STILL TO DO
 
 The two forms on the site (vendor sign-up, and "email me the date") aren't collecting yet.
 Anyone who uses them is told to email you instead — and now that email works, nothing gets
