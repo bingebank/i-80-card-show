@@ -1,0 +1,15 @@
+{
+  // Tells Cloudflare Workers this repo is a plain static website.
+  // Used by the "npx wrangler deploy" build command in the dashboard.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "i-80-card-show",
+  "compatibility_date": "2026-09-19",
+
+  // No Worker script — just files. Everything in the repo root is the site,
+  // minus whatever .assetsignore excludes.
+  "assets": {
+    "directory": "./",
+    // Serve 404.html for addresses that don't exist.
+    "not_found_handling": "404-page"
+  }
+}

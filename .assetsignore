@@ -1,0 +1,8 @@
+# Repo housekeeping that shouldn't be served as part of the website.
+README.md
+docs/
+tools/
+.gitignore
+.assetsignore
+wrangler.jsonc
+assets/img/logo-original.png
